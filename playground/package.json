@@ -1,0 +1,17 @@
+{
+  "name": "rescript-bun-playground",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/Bun.js",
+  "scripts": {
+    "test": "bun test tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rescript/core": "^0.5.0",
+    "rescript": "^11.0.0-rc.5",
+    "rescript-bun": "../"
+  }
+}

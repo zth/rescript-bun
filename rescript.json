@@ -1,0 +1,16 @@
+{
+  "version": "0.1.0",
+  "uncurried": true,
+  "name": "rescript-bun",
+  "namespace": true,
+  "sources": {
+    "dir": "src"
+  },
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
+  },
+  "suffix": ".js",
+  "bs-dependencies": ["@rescript/core"],
+  "bsc-flags": ["-open RescriptCore"]
+}

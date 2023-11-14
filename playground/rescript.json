@@ -1,0 +1,26 @@
+{
+  "uncurried": true,
+  "name": "rescript-bun-playground",
+  "sources": [
+    {
+      "dir": "src"
+    },
+    {
+      "dir": "tests"
+    },
+    {
+      "dir": "examples"
+    }
+  ],
+  "package-specs": {
+    "module": "es6",
+    "in-source": true
+  },
+  "suffix": ".js",
+  "bs-dependencies": ["@rescript/core", "rescript-bun"],
+  "bsc-flags": [
+    "-open RescriptCore",
+    "-open RescriptBun",
+    "-open RescriptBun.Globals"
+  ]
+}
