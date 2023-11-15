@@ -33,3 +33,15 @@ jobs:
 
       - name: Build project
         run: bun run build
+
+      - name: Install dependencies
+        working-directory: ./playground
+        run: npm ci
+
+      - name: Build Playground
+        working-directory: ./playground
+        run: bun run build
+
+      - name: Run Playground tests
+        working-directory: ./playground
+        run: bun run test

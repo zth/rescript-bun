@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/Bun.js",
   "scripts": {
+    "build": "rescript build",
     "test": "bun test tests"
   },
   "keywords": [],
