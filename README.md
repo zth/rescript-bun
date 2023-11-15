@@ -6,6 +6,8 @@ Use [Bun](https://bun.sh) with ReScript.
 
 ## Getting started
 
+**Template repo to get up and running quickly: https://github.com/zth/rescript-bun-starter**
+
 You need to be on at least a recent RC of ReScript v11. This is designed for uncurried mode so you should use that as well (`"uncurried": true` in your bsconfig/`rescript.json`).
 
 Install `rescript-bun` and `@rescript/core`:
