@@ -8,6 +8,11 @@
     "build": "rescript build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "rescript.json",
+    "README.md",
+    "src/**/*"
+  ],
   "keywords": [
     "bun",
     "rescript"
