@@ -672,7 +672,7 @@ module Write = {
     ~destination: Destination.t,
     ~input: Input.t,
     ~options: writeOptions=?,
-  ) => promise<float> = "write"
+  ) => promise<float> = "Bun.write"
 
   /**
  * Persist a {@link Response} body to disk.
@@ -685,7 +685,7 @@ module Write = {
  * @returns A promise that resolves with the number of bytes written.
  */
   external writeResponseToFile: (~file: BunFile.t, ~response: Response.t) => promise<float> =
-    "write"
+    "Bun.write"
 
   /**
    *
@@ -699,7 +699,7 @@ module Write = {
    * @returns A promise that resolves with the number of bytes written.
    */
   external writeResponseToPath: (~destinationPath: string, ~input: Response.t) => promise<float> =
-    "write"
+    "Bun.write"
 
   /**
    *
@@ -720,7 +720,7 @@ module Write = {
    * @param input The file to copy from.
    * @returns A promise that resolves with the number of bytes written.
    */
-  external writeFileToFile: (~destination: BunFile.t, ~input: BunFile.t) => promise<float> = "write"
+  external writeFileToFile: (~destination: BunFile.t, ~input: BunFile.t) => promise<float> = "Bun.write"
 
   /**
    *
@@ -742,7 +742,7 @@ module Write = {
    * @returns A promise that resolves with the number of bytes written.
    */
   external writeFileToPath: (~destinationPath: string, ~input: BunFile.t) => promise<float> =
-    "write"
+    "Bun.write"
 }
 
 module TypedArrayOrBuffer = {
