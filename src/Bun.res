@@ -720,7 +720,8 @@ module Write = {
    * @param input The file to copy from.
    * @returns A promise that resolves with the number of bytes written.
    */
-  external writeFileToFile: (~destination: BunFile.t, ~input: BunFile.t) => promise<float> = "Bun.write"
+  external writeFileToFile: (~destination: BunFile.t, ~input: BunFile.t) => promise<float> =
+    "Bun.write"
 
   /**
    *
@@ -2241,3 +2242,146 @@ external indexOfLine: (~buffer: ArrayBuffer.t, ~offset: int=?) => int = "Bun.ind
    */
 external indexOfLineFromArrayBufferView: (~buffer: ArrayBufferView.t, ~offset: int=?) => int =
   "Bun.indexOfLine"
+
+module Glob = {
+  type t
+
+  type globScanOptions = {
+    /**
+     * The root directory to start matching from. Defaults to `process.cwd()`
+     */
+    cwd?: string,
+    /**
+     * Allow patterns to match entries that begin with a period (`.`).
+     *
+     * @default false
+     */
+    dot?: bool,
+    /**
+     * Return the absolute path for entries.
+     *
+     * @default false
+     */
+    absolute?: bool,
+    /**
+     * Indicates whether to traverse descendants of symbolic link directories.
+     *
+     * @default false
+     */
+    followSymlinks?: bool,
+    /**
+     * Throw an error when symbolic link is broken
+     *
+     * @default false
+     */
+    throwErrorOnBrokenSymlink?: bool,
+    /**
+     * Return only files.
+     *
+     * @default true
+     */
+    onlyFiles?: bool,
+  }
+
+  @new external make: string => t = "Glob"
+
+  /**
+   * Scan a root directory recursively for files that match this glob pattern. Returns an async iterator.
+   *
+   * @throws {ENOTDIR} Given root cwd path must be a directory
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * const scannedFiles = await Array.fromAsync(glob.scan({ cwd: './src' }))
+   * ```
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * for await (const path of glob.scan()) {
+   *   // do something
+   * }
+   * ```
+   */
+  @send
+  external scan: (t, ~options: globScanOptions=?) => AsyncIterableIterator.t<string> = "scan"
+
+  /**
+   * Scan a root directory recursively for files that match this glob pattern. Returns an async iterator.
+   *
+   * @throws {ENOTDIR} Given root cwd path must be a directory
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * const scannedFiles = await Array.fromAsync(glob.scan({ cwd: './src' }))
+   * ```
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * for await (const path of glob.scan()) {
+   *   // do something
+   * }
+   * ```
+   */
+  @send
+  external scanFromCwd: (t, string) => AsyncIterableIterator.t<string> = "scan"
+
+  /**
+   * Synchronously scan a root directory recursively for files that match this glob pattern. Returns an iterator.
+   *
+   * @throws {ENOTDIR} Given root cwd path must be a directory
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * const scannedFiles = Array.from(glob.scan({ cwd: './src' }))
+   * ```
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * for (const path of glob.scan()) {
+   *   // do something
+   * }
+   * ```
+   */
+  @send
+  external scanSync: (t, ~options: globScanOptions=?) => IterableIterator.t<string> = "scan"
+
+  /**
+   * Synchronously scan a root directory recursively for files that match this glob pattern. Returns an iterator.
+   *
+   * @throws {ENOTDIR} Given root cwd path must be a directory
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * const scannedFiles = Array.from(glob.scan({ cwd: './src' }))
+   * ```
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * for (const path of glob.scan()) {
+   *   // do something
+   * }
+   * ```
+   */
+  @send
+  external scanFromCwdSync: (t, string) => IterableIterator.t<string> = "scan"
+
+  /**
+   * Match the glob against a string
+   *
+   * @example
+   * ```js
+   * const glob = new Glob("*.{ts,tsx}");
+   * expect(glob.match('foo.ts')).toBeTrue();
+   * ```
+   */
+  @send
+  external match: (t, string) => bool = "match"
+}
