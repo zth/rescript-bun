@@ -2282,8 +2282,7 @@ module Glob = {
      */
     onlyFiles?: bool,
   }
-
-  @new external make: string => t = "Glob"
+  @module("bun") @new external make: string => t = "Glob"
 
   /**
    * Scan a root directory recursively for files that match this glob pattern. Returns an async iterator.

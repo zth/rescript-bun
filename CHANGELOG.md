@@ -1,5 +1,7 @@
 # main
 
+- Fix `Glob`.
+
 # 0.2.0
 
 - Fix `Bun.write` bindings.
