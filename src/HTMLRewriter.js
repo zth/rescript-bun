@@ -3,12 +3,7 @@
 
 var Types = {};
 
-function m(t) {
-  return t;
-}
-
 export {
   Types ,
-  m ,
 }
 /* No side effect */
