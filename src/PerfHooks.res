@@ -1,44 +1,122 @@
-type eventLoopUtilization = {
-  idle: float,
-  active: float,
-  utilization: float,
-}
-// /**
-//  * @param util1 The result of a previous call to eventLoopUtilization()
-//  * @param util2 The result of a previous call to eventLoopUtilization() prior to util1
-//  */
-type eventLoopUtilityFunction = (
-  ~util1: eventLoopUtilization=?,
-  ~util2: eventLoopUtilization=?,
-) => eventLoopUtilization
-
-type performance = {
-  now: unit => float,
-  /**
-     * The timeOrigin specifies the high resolution millisecond timestamp from which all performance metric durations are measured.
-     */
-  timeOrigin: float,
+module PerformanceEntry = {
+  type t = {
+    duration: float,
+    name: string,
+    startTime: float,
+    entryType: string,
+    kind: int,
+  }
+  @get external duration: t => float = "duration"
+  @get external name: t => string = "name"
+  @get external startTime: t => float = "startTime"
+  @get external entryType: t => string = "entryType"
+  @get external kind: t => int = "kind"
 }
 
-@module("perf_hooks")
-external performance: performance = "performance"
-
-type constants = {
-  @as("NODE_PERFORMANCE_GC_MAJOR") node_performance_gc_major: float,
-  @as("NODE_PERFORMANCE_GC_MINOR") node_performance_gc_minor: float,
-  @as("NODE_PERFORMANCE_GC_INCREMENTAL") node_performance_gc_incremental: float,
-  @as("NODE_PERFORMANCE_GC_WEAKCB") node_performance_gc_weakcb: float,
-  @as("NODE_PERFORMANCE_GC_FLAGS_NO") node_performance_gc_flags_no: float,
-  @as("NODE_PERFORMANCE_GC_FLAGS_CONSTRUCT_RETAINED")
-  node_performance_gc_flags_construct_retained: float,
-  @as("NODE_PERFORMANCE_GC_FLAGS_FORCED") node_performance_gc_flags_forced: float,
-  @as("NODE_PERFORMANCE_GC_FLAGS_SYNCHRONOUS_PHANTOM_PROCESSING")
-  node_performance_gc_flags_synchronous_phantom_processing: float,
-  @as("NODE_PERFORMANCE_GC_FLAGS_ALL_AVAILABLE_GARBAGE")
-  node_performance_gc_flags_all_available_garbage: float,
-  @as("NODE_PERFORMANCE_GC_FLAGS_ALL_EXTERNAL_MEMORY")
-  node_performance_gc_flags_all_external_memory: float,
-  @as("NODE_PERFORMANCE_GC_FLAGS_SCHEDULE_IDLE") node_performance_gc_flags_schedule_idle: float,
+module PerformanceNodeTiming = {
+  type t = {
+    // Extends PerformanceEntry: TODO use spread in ReScript 11
+    duration: float,
+    name: string,
+    startTime: float,
+    entryType: string,
+    kind: int,
+    // Specific to this class:
+    bootstrapComplete: float,
+    clusterSetupStart: float,
+    clusterSetupEnd: float,
+    environment: float,
+    loopStart: float,
+    loopExit: float,
+    moduleLoadStart: float,
+    moduleLoadEnd: float,
+    nodeStart: float,
+    preloadModuleLoadStart: float,
+    preloadModuleLoadEnd: float,
+    thirdPartyMainStart: float,
+    thirdPartyMainEnd: float,
+    v8Start: float,
+  }
+  // Extends PerformanceEntry:
+  @get external duration: t => float = "duration"
+  @get external name: t => string = "name"
+  @get external startTime: t => float = "startTime"
+  @get external entryType: t => string = "entryType"
+  @get external kind: t => int = "kind"
+  // Specific to this class:
+  @get external bootstrapComplete: t => float = "bootstrapComplete"
+  @get external clusterSetupStart: t => float = "clusterSetupStart"
+  @get external clusterSetupEnd: t => float = "clusterSetupEnd"
+  @get external environment: t => float = "environment"
+  @get external loopStart: t => float = "loopStart"
+  @get external loopExit: t => float = "loopExit"
+  @get external moduleLoadStart: t => float = "moduleLoadStart"
+  @get external moduleLoadEnd: t => float = "moduleLoadEnd"
+  @get external nodeStart: t => float = "nodeStart"
+  @get external preloadModuleLoadStart: t => float = "preloadModuleLoadStart"
+  @get external preloadModuleLoadEnd: t => float = "preloadModuleLoadEnd"
+  @get external thirdPartyMainStart: t => float = "thirdPartyMainStart"
+  @get external thirdPartyMainEnd: t => float = "thirdPartyMainEnd"
+  @get external v8Start: t => float = "v8Start"
 }
 
-@module("perf_hooks") external constants: constants = "constants"
+module Performance = {
+  type t = {nodeTiming: PerformanceNodeTiming.t}
+  @module("node:perf_hooks") external performance: t = "performance"
+  @send external clearMarks: (t, unit) => unit = "clearMarks"
+  @send external clearMarksByName: (t, string) => unit = "clearMarks"
+  @send external mark: (t, unit) => unit = "mark"
+  @send external markWithName: (t, string) => unit = "mark"
+  @send
+  external measure: (t, string, ~startMark: string, ~endMark: string) => unit = "measure"
+  @get external nodeTiming: t => PerformanceNodeTiming.t = "nodeTiming"
+  @send external now: t => float = "now"
+  @send external timerify: (unit => unit, unit) => unit = "timerify"
+  @send
+  external timerifyU: (@uncurry (unit => unit), unit) => unit = "timerify"
+}
+
+module Histogram = {
+  type t = {
+    exceeds: float,
+    max: float,
+    mean: float,
+    min: float,
+  }
+  @send external disable: (t, unit) => bool = "disable"
+  @send external enable: (t, unit) => bool = "enable"
+  @get external exceeds: t => float = "exceeds"
+  @get external max: t => float = "max"
+  @get external mean: t => float = "mean"
+  @get external min: t => float = "min"
+  @send external percentile: (t, int) => float = "percentile"
+  @send external reset: t => unit = "reset"
+  @send external stddev: t => float = "stddev"
+  // ES6 Map type not defined by BuckleScript as far as I can tell
+  // [@bs.get] external percentiles: t => ES6Map.t(int, float) = "percentiles";
+}
+
+module PerformanceObserverEntryList = {
+  type t
+  @send
+  external getEntries: t => array<PerformanceEntry.t> = "getEntries"
+  @send
+  external getEntriesByName: (t, string, Js.Nullable.t<string>) => array<PerformanceEntry.t> =
+    "getEntriesByName"
+  let getEntriesByName = (entryList, ~type_=?, name) =>
+    getEntriesByName(entryList, name, Js.Nullable.fromOption(type_))
+  @send
+  external getEntriesByType: (t, string) => array<PerformanceEntry.t> = "getEntriesByType"
+}
+
+module PerformanceObserver = {
+  type t
+  @module("node:perf_hooks") @new
+  external make: ((PerformanceObserverEntryList.t, t) => unit) => t = "PerformanceObserver"
+}
+
+@module("node:perf_hooks")
+external monitorEventLoopDelay: Js.Nullable.t<{"resolution": float}> => Histogram.t =
+  "eventLoopDelay"
+let monitorEventLoopDelay = (~resolution=?, ()) =>
+  monitorEventLoopDelay(Js.Nullable.fromOption(resolution))

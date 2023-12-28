@@ -157,10 +157,7 @@ var FileSystemRouter = {};
 
 var Glob = {};
 
-var BunCrypto;
-
 export {
-  BunCrypto ,
   StringOrBuffer ,
   Env ,
   Server ,
