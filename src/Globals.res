@@ -1302,7 +1302,7 @@ module TextDecoder = {
    * @param input An `ArrayBuffer`, `DataView` or `BufferSource` instance containing the encoded data.
    */
   @send
-  external decode: (~input: Input.t=?) => string = "decode"
+  external decode: (t, ~input: Input.t=?) => string = "decode"
 }
 
 // TODO: ShadowRealm
