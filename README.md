@@ -42,6 +42,10 @@ Include them in your `rescript.json`:
 
 This will make all of Bun available to you without needing to dip into the `RescriptBun` module explicitly.
 
+## Credits
+
+This lib copies [`rescript-nodejs`](https://github.com/TheSpyder/rescript-nodejs) for Bun's Node compatible bindings. Shout out to the maintainers of that project!
+
 ## Examples
 
 Here's a few examples of how it looks. More examples (often inspired by `https://bun.sh/guides`) can be found in the `playground/examples` directory in this repo.
@@ -152,47 +156,47 @@ Currently, bindings exist for the most common things. There's still a good amoun
 - [x] Globals
 - [x] Bun
 - [x] Tests
-- [ ] Fs
-- [ ] Stream (some stream utils already exist in Globals + Bun)
+- [x] Fs
+- [x] Stream (some stream utils already exist in Globals + Bun)
 - [x] Path
 
 #### Prio 2
 
 - [x] AsyncHooks
-- [ ] Crypto
-- [ ] Buffer
-- [ ] Child_process (needs Stream?)
+- [x] Crypto
+- [x] Buffer
+- [x] Child_process (needs Stream?)
 - [x] HTML Rewriter
 - [x] Os
 - [ ] Sqlite
 - [x] Perf hooks
 - [x] StringDecoder
-- [ ] Readline (needs Stream?)
+- [x] Readline (needs Stream?)
 - [x] WorkerThreads
 
 #### Prio 3
 
 - [ ] FFI
-- [ ] Util
+- [x] Util
 - [ ] SupportsColors
-- [ ] Timers
-- [ ] Tls
-- [ ] Tty
+- [x] Timers
+- [x] Tls
+- [x] Tty
 
 #### Unclear if needed
 
-- [ ] Assert
+- [x] Assert
 - [ ] Diagnostics channel
-- [ ] Dns
+- [x] Dns
 - [ ] Domain
-- [ ] Events
+- [x] Events
 - [ ] JSC
-- [ ] Module
-- [ ] Net
-- [ ] VM
+- [x] Module
+- [x] Net
+- [x] VM
 - [ ] WS (already multiple websocket things present)
-- [ ] Zlib (bun has its own gzip?)
-- [ ] Http (Nodes built in HTTP, should use Bun's own, right?)
+- [x] Zlib (bun has its own gzip?)
+- [x] Http (Nodes built in HTTP, should use Bun's own, right?)
 
 #### Definitively not needed
 

@@ -1,5 +1,7 @@
 # main
 
+- Integrate Node bindings from [`rescript-nodejs`](https://github.com/TheSpyder/rescript-nodejs).
+
 # 0.2.1
 
 - Fix `Glob`.

@@ -1,6 +1,4 @@
 // TODO: Figure out difference between crypto and Bun crypto
-
-module BunCrypto = Crypto
 open Globals
 open Types
 
@@ -1866,8 +1864,7 @@ module CryptoHasher = {
      * @param input
      */
   @send
-  external update: (t, ~input: StringOrBuffer.t, ~inputEncoding: BunCrypto.encoding=?) => t =
-    "update"
+  external update: (t, ~input: StringOrBuffer.t, ~inputEncoding: encoding=?) => t = "update"
 
   /**
      * Perform a deep copy of the hasher
