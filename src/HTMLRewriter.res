@@ -68,9 +68,6 @@ module Types = {
   }
 
   type rec documentEnd = {append: (content, ~options: contentOptions=?) => documentEnd}
-
-  @tag("kind")
-  type syncOrAsync<'a> = Sync('a => unit) | Async('a => promise<unit>)
 }
 
 type htmlRewriterElementContentHandlers = {
