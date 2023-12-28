@@ -155,6 +155,8 @@ var CryptoHasher = {};
 
 var FileSystemRouter = {};
 
+var Glob = {};
+
 var BunCrypto;
 
 export {
@@ -174,5 +176,6 @@ export {
   SemVer ,
   CryptoHasher ,
   FileSystemRouter ,
+  Glob ,
 }
 /* No side effect */

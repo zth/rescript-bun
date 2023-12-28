@@ -2305,7 +2305,7 @@ module Glob = {
    * ```
    */
   @send
-  external scan: (t, ~options: globScanOptions=?) => AsyncIterableIterator.t<string> = "scan"
+  external scan: (t, ~options: globScanOptions=?) => AsyncIterator.t<string> = "scan"
 
   /**
    * Scan a root directory recursively for files that match this glob pattern. Returns an async iterator.
@@ -2327,7 +2327,7 @@ module Glob = {
    * ```
    */
   @send
-  external scanFromCwd: (t, string) => AsyncIterableIterator.t<string> = "scan"
+  external scanFromCwd: (t, string) => AsyncIterator.t<string> = "scan"
 
   /**
    * Synchronously scan a root directory recursively for files that match this glob pattern. Returns an iterator.
@@ -2349,7 +2349,7 @@ module Glob = {
    * ```
    */
   @send
-  external scanSync: (t, ~options: globScanOptions=?) => IterableIterator.t<string> = "scan"
+  external scanSync: (t, ~options: globScanOptions=?) => Iterator.t<string> = "scan"
 
   /**
    * Synchronously scan a root directory recursively for files that match this glob pattern. Returns an iterator.
@@ -2371,7 +2371,7 @@ module Glob = {
    * ```
    */
   @send
-  external scanFromCwdSync: (t, string) => IterableIterator.t<string> = "scan"
+  external scanFromCwdSync: (t, string) => Iterator.t<string> = "scan"
 
   /**
    * Match the glob against a string
