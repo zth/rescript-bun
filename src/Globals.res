@@ -1155,6 +1155,20 @@ module Request = {
    */
   @get
   external bodyUsed: t => bool = "bodyUsed"
+
+  @new
+  external makeFromString: (string, ~requestInit: requestInit=?) => t = "Request"
+
+  type requestInitWithUrl = {
+    ...requestInit,
+    url: string,
+  }
+
+  @new
+  external make: requestInitWithUrl => t = "Request"
+
+  @new
+  external makeFromRequest: (t, ~requestInit: requestInit=?) => t = "Request"
 }
 
 module Crypto = {
