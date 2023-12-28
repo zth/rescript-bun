@@ -20,7 +20,7 @@ var server = Bun.serve({
                 if (typeof profilePicture === "string") {
                   return RescriptCore.panic("Must upload a profile picture");
                 }
-                await write("profilePicture.png", Bun.file(profilePicture, undefined));
+                await Bun.write("profilePicture.png", Bun.file(profilePicture, undefined));
                 return new Response("Success", undefined);
             default:
               return new Response("Not Found", {

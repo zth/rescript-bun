@@ -9,7 +9,7 @@ let response = await fetch(
     method: "POST",
     body: Value(
       JSON.stringifyAny({"message": "Hello from Bun!"})
-      ->Option.getWithDefault("-")
+      ->Option.getOr("-")
       ->BodyInit.makeFromString,
     ),
     headers: FromArray([("Content-Type", "application/json")]),

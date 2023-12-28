@@ -9,7 +9,7 @@ var html = await response.text();
 console.log(html);
 
 var response$1 = await fetch("https://bun.sh/api", {
-      body: Core__Option.getWithDefault(JSON.stringify({
+      body: Core__Option.getOr(JSON.stringify({
                 message: "Hello from Bun!"
               }), "-"),
       headers: [[
