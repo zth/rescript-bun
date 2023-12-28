@@ -1263,6 +1263,8 @@ module Hash = {
   }
 }
 
+type javaScriptLoader = | @as("jsx") Jsx | @as("js") Js | @as("ts") Ts | @as("tsx") Tsx
+
 /**
    * Fast deep-equality check two objects.
    *
@@ -1279,8 +1281,448 @@ external deepEquals: ('a, 'b, /** @default false */ ~strict: bool=?) => bool = "
    */
 external deepMatch: ('a, 'b) => bool = "Bun.deepMatch"
 
-// TODO(when needed): Transpiler
-// TODO(when needed): Build
+module BunPlugin = {
+  // TODO
+  type t
+}
+
+/** https://bun.sh/docs/bundler/loaders */
+type loader =
+  | @as("js") Js
+  | @as("jsx") Jsx
+  | @as("ts") Ts
+  | @as("tsx") Tsx
+  | @as("json") Json
+  | @as("toml") Toml
+  | @as("file") File
+  | @as("napi") Napi
+  | @as("wasm") Wasm
+  | @as("text") Text
+
+type target =
+  | /**
+     * For generating bundles that are intended to be run by the Bun runtime. In many cases,
+     * it isn't necessary to bundle server-side code; you can directly execute the source code
+     * without modification. However, bundling your server code can reduce startup times and
+     * improve running performance.
+     *
+     * All bundles generated with `target: "bun"` are marked with a special `// @bun` pragma, which
+     * indicates to the Bun runtime that there's no need to re-transpile the file before execution.
+     */
+  @as("bun")
+  Bun
+  | /**
+     * The plugin will be applied to Node.js builds
+     */
+  @as("node")
+  Node
+  | /**
+     * The plugin will be applied to browser builds
+     */
+  @as("browser")
+  Browser
+
+module Transpiler = {
+  type t
+
+  type jsxMode =
+    | @as("preserve") Preserve
+    | @as("react") React
+    | @as("react-jsx") ReactJsx
+    | @as("react-jsxdev") ReactJsxDev
+
+  type tsCompilerOptions = {
+    paths?: Dict.t<array<string>>,
+    baseUrl?: string,
+    /** "preserve" is not supported yet */
+    jsx?: jsxMode,
+    jsxFactory?: string,
+    jsxFragmentFactory?: string,
+    jsxImportSource?: string,
+    useDefineForClassFields?: bool,
+    importsNotUsedAsValues?: [#remove | #preserve | #error],
+    /* moduleSuffixes is not supported yet */
+    // moduleSuffixes?: any;
+  }
+  /**
+   * tsconfig.json options supported by Bun
+   */
+  type tsConfig = {
+    extends?: string,
+    compilerOptions?: tsCompilerOptions,
+  }
+
+  type macroMap = Dict.t<Dict.t<string>>
+
+  @unboxed
+  type stringOrTsConfig = String(string) | TsConfig(tsConfig)
+
+  type transpilerOptionsExport = {
+    eliminate?: array<string>,
+    replace?: Dict.t<string>,
+  }
+
+  type transpilerOptions = {
+    /**
+     * Replace key with value. Value must be a JSON string.
+     * @example
+     *  ```
+     *  { "process.env.NODE_ENV": "\"production\"" }
+     * ```
+     */
+    define?: Dict.t<string>,
+    /** What is the default loader used for this transpiler?  */
+    loader?: javaScriptLoader,
+    /**  What platform are we targeting? This may affect how import and/or require is used */
+    /**  @example "browser" */
+    target?: target,
+    /**
+     *  TSConfig.json file as stringified JSON or an object
+     *  Use this to set a custom JSX factory, fragment, or import source
+     *  For example, if you want to use Preact instead of React. Or if you want to use Emotion.
+     */
+    tsconfig?: stringOrTsConfig,
+    /**
+     *    Replace an import statement with a macro.
+     *
+     *    This will remove the import statement from the final output
+     *    and replace any function calls or template strings with the result returned by the macro
+     *
+     *    @example
+     *    ```json
+     *    {
+     *        "react-relay": {
+     *            "graphql": "bun-macro-relay"
+     *        }
+     *    }
+     *    ```
+     *
+     *    Code that calls `graphql` will be replaced with the result of the macro.
+     *
+     *    ```js
+     *    import {graphql} from "react-relay";
+     *
+     *    // Input:
+     *    const query = graphql`
+     *        query {
+     *            ... on User {
+     *                id
+     *            }
+     *        }
+     *    }`;
+     *    ```
+     *
+     *    Will be replaced with:
+     *
+     *    ```js
+     *    import UserQuery from "./UserQuery.graphql";
+     *    const query = UserQuery;
+     *    ```
+     */
+    macro?: macroMap,
+    autoImportJSX?: bool,
+    allowBunRuntime?: bool,
+    exports?: transpilerOptionsExport,
+    treeShaking?: bool,
+    trimUnusedImports?: bool,
+    jsxOptimizationInline?: bool,
+    /**
+     * **Experimental**
+     *
+     * Minify whitespace and comments from the output.
+     */
+    minifyWhitespace?: bool,
+    /**
+     * **Experimental**
+     *
+     * Enabled by default, use this to disable dead code elimination.
+     *
+     * Some other transpiler options may still do some specific dead code elimination.
+     */
+    deadCodeElimination?: bool,
+    /**
+     * This does two things (and possibly more in the future):
+     * 1. `const` declarations to primitive types (excluding Object/Array) at the top of a scope before any `let` or `var` declarations will be inlined into their usages.
+     * 2. `let` and `const` declarations only used once are inlined into their usages.
+     *
+     * JavaScript engines typically do these optimizations internally, however
+     * it might only happen much later in the compilation pipeline, after code
+     * has been executed many many times.
+     *
+     * This will typically shrink the output size of code, but it might increase
+     * it in some cases. Do your own benchmarks!
+     */
+    inline?: bool,
+    /**
+     * @default "warn"
+     */
+    logLevel?: [#verbose | #debug | #info | #warn | #error],
+  }
+
+  /**
+   * Quickly transpile TypeScript, JSX, or JS to modern JavaScript.
+   *
+   * @example
+   * ```js
+   * const transpiler = new Bun.Transpiler();
+   * transpiler.transformSync(`
+   *   const App = () => <div>Hello World</div>;
+   * export default App;
+   * `);
+   * // This outputs:
+   * const output = `
+   * const App = () => jsx("div", {
+   *   children: "Hello World"
+   * }, undefined, false, undefined, this);
+   * export default App;
+   * `
+   * ```
+   */
+  @new
+  external make: (~options: transpilerOptions=?) => t = "Bun.Transpiler"
+
+  /**
+     * Transpile code from TypeScript or JSX into valid JavaScript.
+     * This function does not resolve imports.
+     * @param code The code to transpile
+     */
+  @send
+  external transform: (t, string, ~loader: loader=?) => promise<string> = "transform"
+
+  /**
+     * Transpile code from TypeScript or JSX into valid JavaScript.
+     * This function does not resolve imports.
+     * @param code The code to transpile
+     */
+  @send
+  external transformBuffer: (t, Buffer.t, ~loader: loader=?) => promise<string> = "transform"
+  /**
+     * Transpile code from TypeScript or JSX into valid JavaScript.
+     * This function does not resolve imports.
+     * @param code The code to transpile
+     */
+  @send
+  external transformSyncWithLoaderAndCtx: (t, string, ~loader: loader, ~ctx: {..}) => string =
+    "transformSync"
+  /**
+     * Transpile code from TypeScript or JSX into valid JavaScript.
+     * This function does not resolve imports.
+     * @param code The code to transpile
+     * @param ctx An object to pass to macros
+     */
+  @send
+  external transformSyncWithCtx: (t, string, ~ctx: {..}) => string = "transformSync"
+
+  /**
+     * Transpile code from TypeScript or JSX into valid JavaScript.
+     * This function does not resolve imports.
+     * @param code The code to transpile
+     */
+  @send
+  external transformSyncWithLoader: (t, string, ~loader: loader=?) => string = "transformSync"
+
+  /**
+     * Transpile code from TypeScript or JSX into valid JavaScript.
+     * This function does not resolve imports.
+     * @param code The code to transpile
+     */
+  @send
+  external transformBufferSyncWithLoaderAndCtx: (
+    t,
+    Buffer.t,
+    ~loader: loader,
+    ~ctx: {..},
+  ) => string = "transformSync"
+  /**
+     * Transpile code from TypeScript or JSX into valid JavaScript.
+     * This function does not resolve imports.
+     * @param code The code to transpile
+     * @param ctx An object to pass to macros
+     */
+  @send
+  external transformBufferSyncWithCtx: (t, Buffer.t, ~ctx: {..}) => string = "transformSync"
+
+  /**
+     * Transpile code from TypeScript or JSX into valid JavaScript.
+     * This function does not resolve imports.
+     * @param code The code to transpile
+     */
+  @send
+  external transformBufferSyncWithLoader: (t, Buffer.t, ~loader: loader=?) => string =
+    "transformSync"
+
+  type importKind =
+    | @as("import-statement") ImportStatement
+    | @as("require-call") RequireCall
+    | @as("require-resolve") RequireResolve
+    | @as("dynamic-import") DynamicImport
+    | @as("import-rule") ImportRule
+    | @as("url-token") UrlToken
+    | @as("internal") Internal
+    | @as("entry-point") EntryPoint
+
+  type import = {
+    path: string,
+    kind: importKind,
+  }
+
+  type scanResult = {exports: array<string>, imports: array<import>}
+
+  /**
+     * Get a list of import paths and paths from a TypeScript, JSX, TSX, or JavaScript file.
+     * @param code The code to scan
+     * @example
+     * ```js
+     * const {imports, exports} = transpiler.scan(`
+     * import {foo} from "baz";
+     * const hello = "hi!";
+     * `);
+     *
+     * console.log(imports); // ["baz"]
+     * console.log(exports); // ["hello"]
+     * ```
+     */
+  @send
+  external scan: (t, StringOrBuffer.t) => scanResult = "scan"
+
+  /**
+     *  Get a list of import paths from a TypeScript, JSX, TSX, or JavaScript file.
+     * @param code The code to scan
+     * @example
+     * ```js
+     * const imports = transpiler.scanImports(`
+     * import {foo} from "baz";
+     * import type {FooType} from "bar";
+     * import type {DogeType} from "wolf";
+     * `);
+     *
+     * console.log(imports); // ["baz"]
+     * ```
+     * This is a fast path which performs less work than `scan`.
+     */
+  @send
+  external scanImports: (t, StringOrBuffer.t) => array<import> = "scanImports"
+}
+
+module Build = {
+  type moduleFormat = | @as("esm") Esm // later: "cjs", "iife"
+
+  type namingConfig = {
+    chunk?: string,
+    entry?: string,
+    asset?: string,
+  }
+
+  @unboxed
+  type naming = String(string) | Config(namingConfig)
+
+  type sourcemap = | @as("none") None | @as("inline") Inline | @as("external") External
+
+  type minifyOptions = {
+    whitespace?: bool,
+    syntax?: bool,
+    identifiers?: bool,
+  }
+
+  @unboxed
+  type minify = Bool(bool) | Config(minifyOptions)
+
+  type buildConfig = {
+    entrypoints: array<string>, // list of file path
+    outdir?: string, // output directory
+    target?: target, // default: "browser"
+    format?: moduleFormat, // later: "cjs", "iife"
+    naming?: naming,
+    root?: string, // project root
+    splitting?: bool, // default true, enable code splitting
+    plugins?: array<BunPlugin.t>,
+    // manifest?: boolean; // whether to return manifest
+    @as("external") external_?: array<string>,
+    publicPath?: string,
+    define?: Dict.t<string>,
+    // origin?: string; // e.g. http://mydomain.com
+    loader?: Dict.t<loader>,
+    sourcemap?: sourcemap, // default: "none"
+    minify?: minify,
+    // treeshaking?: boolean;
+
+    // jsx?:
+    //   | "automatic"
+    //   | "classic"
+    //   | /* later: "preserve" */ {
+    //       runtime?: "automatic" | "classic"; // later: "preserve"
+    //       /** Only works when runtime=classic */
+    //       factory?: string; // default: "React.createElement"
+    //       /** Only works when runtime=classic */
+    //       fragment?: string; // default: "React.Fragment"
+    //       /** Only works when runtime=automatic */
+    //       importSource?: string; // default: "react"
+    //     };
+  }
+
+  module BuildArtifact = {
+    type kind =
+      | @as("entry-point") EntryPoint
+      | @as("chunk") Chunk
+      | @as("asset") Asset
+      | @as("sourcemap") Sourcemap
+    type rec t = {
+      path: string,
+      loader: loader,
+      hash: Null.t<string>,
+      kind: kind,
+      sourcemap: Null.t<t>,
+    }
+
+    external asBlob: t => Blob.t = "%identity"
+  }
+
+  type position = {
+    lineText: string,
+    file: string,
+    namespace: string,
+    line: int,
+    column: int,
+    length: int,
+    offset: int,
+  }
+
+  @tag("name")
+  type logMessage =
+    | BuildMessage({
+        position: Null.t<position>,
+        message: string,
+        level: [#error | #warning | #info | #debug | #verbose],
+      })
+    | ResolveMessage({
+        position: Null.t<position>,
+        code: string,
+        message: string,
+        referrer: string,
+        specifier: string,
+        importKind: [
+          | #entry_point
+          | #stmt
+          | #require
+          | #import
+          | #dynamic
+          | #require_resolve
+          | #at
+          | #at_conditional
+          | #url
+          | #internal
+        ],
+        level: [#error | #warning | #info | #debug | #verbose],
+      })
+
+  type buildOutput = {
+    outputs: array<BuildArtifact.t>,
+    success: bool,
+    logs: array<logMessage>,
+  }
+}
+
+external build: Build.buildConfig => promise<Build.buildOutput> = "Bun.build"
 
 /**
  * Hash and verify passwords using argon2 or bcrypt. The default is argon2.

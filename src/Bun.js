@@ -147,6 +147,16 @@ var Hash = {
   Algorithms: Algorithms
 };
 
+var BunPlugin = {};
+
+var Transpiler = {};
+
+var BuildArtifact = {};
+
+var Build = {
+  BuildArtifact: BuildArtifact
+};
+
 var Password = {};
 
 var SemVer = {};
@@ -169,6 +179,9 @@ export {
   Dns ,
   FileSink ,
   Hash ,
+  BunPlugin ,
+  Transpiler ,
+  Build ,
   Password ,
   SemVer ,
   CryptoHasher ,
