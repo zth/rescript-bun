@@ -2787,7 +2787,7 @@ module Glob = {
    * ```
    */
   @send
-  external scanSync: (t, ~options: globScanOptions=?) => Iterator.t<string> = "scan"
+  external scanSync: (t, ~options: globScanOptions=?) => Iterator.t<string> = "scanSync"
 
   /**
    * Synchronously scan a root directory recursively for files that match this glob pattern. Returns an iterator.
@@ -2809,7 +2809,7 @@ module Glob = {
    * ```
    */
   @send
-  external scanFromCwdSync: (t, string) => Iterator.t<string> = "scan"
+  external scanFromCwdSync: (t, string) => Iterator.t<string> = "scanSync"
 
   /**
    * Match the glob against a string

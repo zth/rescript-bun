@@ -1,5 +1,7 @@
 # main
 
+- Fix `Bun.scanSync` APIs.
+
 # 0.3.0
 
 - Integrate Node bindings from [`rescript-nodejs`](https://github.com/TheSpyder/rescript-nodejs).
