@@ -1,5 +1,7 @@
 # main
 
+# 0.3.0
+
 - Integrate Node bindings from [`rescript-nodejs`](https://github.com/TheSpyder/rescript-nodejs).
 - Bind `Transpile` and `Build`.
 
