@@ -1,5 +1,7 @@
 # main
 
+# 0.3.1
+
 - Fix `Bun.scanSync` APIs.
 
 # 0.3.0
