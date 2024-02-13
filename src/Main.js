@@ -92,6 +92,14 @@ var $$URL = Globals$RescriptBun.$$URL;
 
 var FetchEvent = Globals$RescriptBun.FetchEvent;
 
+var ShellOutput = Globals$RescriptBun.ShellOutput;
+
+var ShellExpression = Globals$RescriptBun.ShellExpression;
+
+var ShellPromise = Globals$RescriptBun.ShellPromise;
+
+var Shell = Globals$RescriptBun.Shell;
+
 export {
   AsyncHooks ,
   BunCrypto ,
@@ -138,5 +146,9 @@ export {
   $$WebSocket ,
   $$URL ,
   FetchEvent ,
+  ShellOutput ,
+  ShellExpression ,
+  ShellPromise ,
+  Shell ,
 }
 /* No side effect */

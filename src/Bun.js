@@ -6,14 +6,6 @@ var StringOrBuffer = {};
 
 var Env = {};
 
-var ShellOutput = {};
-
-var ShellExpression = {};
-
-var ShellPromise = {};
-
-var Shell = {};
-
 var Server = {};
 
 var BunFile = {};
@@ -178,10 +170,6 @@ var Glob = {};
 export {
   StringOrBuffer ,
   Env ,
-  ShellOutput ,
-  ShellExpression ,
-  ShellPromise ,
-  Shell ,
   Server ,
   BunFile ,
   Write ,
