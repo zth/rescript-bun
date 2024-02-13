@@ -34,6 +34,9 @@ jobs:
       - name: Build project
         run: bun run build
 
+      - name: Test project
+        run: bun run test
+
       - name: Install dependencies
         working-directory: ./playground
         run: npm ci
