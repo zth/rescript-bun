@@ -2,7 +2,7 @@ open Test
 
 describe("shell", () => {
   testAsync("basic commands work", async () => {
-    open Bun
+    open Bun.Shell
 
     let res = await (sh`echo "HELLO"`)
 

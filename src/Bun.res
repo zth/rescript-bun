@@ -197,6 +197,11 @@ module ShellPromise = {
 }
 
 module Shell = {
+  @module("bun") @taggedTemplate
+  external sh: (array<string>, array<string>) => ShellPromise.t = "$"
+
+  @module("bun") @taggedTemplate
+  external shExpr: (array<string>, array<ShellExpression.t>) => ShellPromise.t = "$"
   /**
      * Perform bash-like brace expansion on the given pattern.
      * @param pattern - Brace pattern to expand
@@ -219,12 +224,6 @@ module Shell = {
   @scope("$")
   external escape: string => string = "escape"
 }
-
-@module("bun") @taggedTemplate
-external sh: (array<string>, array<string>) => ShellPromise.t = "$"
-
-@module("bun") @taggedTemplate
-external shExpr: (array<string>, array<ShellExpression.t>) => ShellPromise.t = "$"
 
 module Server = {
   type t

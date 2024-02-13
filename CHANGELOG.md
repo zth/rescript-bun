@@ -1,5 +1,7 @@
 # main
 
+- Add bindings to Bun's shell `$`. https://github.com/zth/rescript-bun/pull/4
+
 # 0.3.1
 
 - Fix `Bun.scanSync` APIs.
