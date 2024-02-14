@@ -75,6 +75,14 @@ var $$URL = {};
 
 var FetchEvent = {};
 
+var ShellOutput = {};
+
+var ShellExpression = {};
+
+var ShellPromise = {};
+
+var Shell = {};
+
 export {
   BufferSource ,
   HeadersInit ,
@@ -107,5 +115,9 @@ export {
   $$WebSocket ,
   $$URL ,
   FetchEvent ,
+  ShellOutput ,
+  ShellExpression ,
+  ShellPromise ,
+  Shell ,
 }
 /* No side effect */

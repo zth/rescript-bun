@@ -6,7 +6,7 @@
   "description": "Use Bun with ReScript.",
   "scripts": {
     "build": "rescript build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "bun test test/*.test.js"
   },
   "files": [
     "rescript.json",
@@ -20,11 +20,11 @@
   "author": "Gabriel Nordeborn",
   "license": "MIT",
   "devDependencies": {
-    "@rescript/core": "^0.6.0",
-    "rescript": "^11.0.0-rc.8"
+    "@rescript/core": "1.0.0",
+    "rescript": "11.1.0-rc.2"
   },
   "peerDependencies": {
-    "rescript": ">=11.0.0-rc.5",
-    "@rescript/core": ">=0.5.0"
+    "rescript": ">=11.0.0 || ^11.1.0-rc.2",
+    "@rescript/core": ">=1.0.0"
   }
 }

@@ -2060,3 +2060,168 @@ type eventMap = {
 }
 
 // TODO: Loader
+
+module ShellOutput = {
+  type t = {
+    stdout: Buffer.t,
+    stderr: Buffer.t,
+    exitCode: int,
+  }
+}
+
+module ShellExpression = {
+  type t
+
+  type raw = {raw: string}
+
+  external fromString: string => t = "%identity"
+  external fromRaw: raw => t = "%identity"
+  // external fromSubprocess: subprocess => t = "%identity"
+  external fromReadableStream: ReadableStream.t<_> => t = "%identity"
+  // external fromWritable: spawnOptionsWritable => t = "%identity"
+  // external fromReadable: spawnOptionsReadable => t = "%identity"
+}
+
+module ShellPromise = {
+  type t = promise<ShellOutput.t>
+
+  @get external stdin: t => WritableStream.t<_> = "stdin"
+
+  /**
+     * Change the current working directory of the shell.
+     * @param newCwd - The new working directory
+     */
+  @send
+  external cwd: (t, string) => t = "cwd"
+
+  /**
+     * Set environment variables for the shell.
+     * @param newEnv - The new environment variables
+     *
+     * @example
+     * ```ts
+     * await $`echo $FOO`.env({ ...process.env, FOO: "LOL!" })
+     * expect(stdout.toString()).toBe("LOL!");
+     * ```
+     */
+  @send
+  external env: (t, Dict.t<string>) => t = "env"
+
+  /**
+     * By default, the shell will write to the current process's stdout and stderr, as well as buffering that output.
+     *
+     * This configures the shell to only buffer the output.
+     */
+  @send
+  external quiet: t => t = "quiet"
+
+  /**
+     * Read from stdout as a string, line by line
+     *
+     * Automatically calls {@link quiet} to disable echoing to stdout.
+     */
+  @send
+  external lines: t => AsyncIterator.t<string> = "lines"
+
+  /**
+     * Read from stdout as a string
+     *
+     * Automatically calls {@link quiet} to disable echoing to stdout.
+     * @param encoding - The encoding to use when decoding the output
+     * @returns A promise that resolves with stdout as a string
+     * @example
+     *
+     * ## Read as UTF-8 string
+     *
+     * ```ts
+     * const output = await $`echo hello`.text();
+     * console.log(output); // "hello\n"
+     * ```
+     *
+     * ## Read as base64 string
+     *
+     * ```ts
+     * const output = await $`echo ${atob("hello")}`.text("base64");
+     * console.log(output); // "hello\n"
+     * ```
+     *
+     */
+  @send
+  external text: (t, ~encoding: bufferEncoding=?) => promise<string> = "text"
+
+  /**
+     * Read from stdout as a JSON object
+     *
+     * Automatically calls {@link quiet}
+     *
+     * @returns A promise that resolves with stdout as a JSON object
+     * @example
+     *
+     * ```ts
+     * const output = await $`echo '{"hello": 123}'`.json();
+     * console.log(output); // { hello: 123 }
+     * ```
+     *
+     */
+  @send
+  external json: t => promise<JSON.t> = "json"
+
+  /**
+     * Read from stdout as an ArrayBuffer
+     *
+     * Automatically calls {@link quiet}
+     * @returns A promise that resolves with stdout as an ArrayBuffer
+     * @example
+     *
+     * ```ts
+     * const output = await $`echo hello`.arrayBuffer();
+     * console.log(output); // ArrayBuffer { byteLength: 6 }
+     * ```
+     */
+  @send
+  external arrayBuffer: t => promise<ArrayBuffer.t> = "arrayBuffer"
+
+  /**
+     * Read from stdout as a Blob
+     *
+     * Automatically calls {@link quiet}
+     * @returns A promise that resolves with stdout as a Blob
+     * @example
+     * ```ts
+     * const output = await $`echo hello`.blob();
+     * console.log(output); // Blob { size: 6, type: "" }
+     * ```
+     */
+  @send
+  external blob: t => promise<Blob.t> = "blob"
+}
+
+module Shell = {
+  /**
+     * Perform bash-like brace expansion on the given pattern.
+     * @param pattern - Brace pattern to expand
+     *
+     * @example
+     * ```js
+     * const result = braces('index.{js,jsx,ts,tsx}');
+     * console.log(result) // ['index.js', 'index.jsx', 'index.ts', 'index.tsx']
+     * ```
+     */
+  @module("bun")
+  @scope("$")
+  external braces: string => array<string> = "braces"
+
+  /**
+     * Escape strings for input into shell commands.
+     * @param input
+     */
+  @module("bun")
+  @scope("$")
+  external escape: string => string = "escape"
+}
+
+@module("bun") @taggedTemplate
+external sh: (array<string>, array<string>) => ShellPromise.t = "$"
+
+@module("bun") @taggedTemplate
+external shExpr: (array<string>, array<ShellExpression.t>) => ShellPromise.t = "$"

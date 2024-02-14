@@ -11,8 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@rescript/core": "^0.6.0",
-    "rescript": "^11.0.0-rc.8",
+    "@rescript/core": "1.0.0",
+    "rescript": "11.1.0-rc.2",
     "rescript-bun": "../"
   }
 }
