@@ -1,5 +1,9 @@
 # main
 
+# 0.4.1
+
+- Fix `package-lock.json` issue.
+
 # 0.4.0
 
 - Add bindings to Bun's shell `$`. https://github.com/zth/rescript-bun/pull/4
