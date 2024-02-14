@@ -20,11 +20,11 @@
   "author": "Gabriel Nordeborn",
   "license": "MIT",
   "devDependencies": {
-    "@rescript/core": "0.7.0",
+    "@rescript/core": "1.0.0",
     "rescript": "11.1.0-rc.2"
   },
   "peerDependencies": {
-    "rescript": ">=11.1.0-rc.2",
-    "@rescript/core": ">=0.7.0"
+    "rescript": ">=11.0.0 || ^11.1.0-rc.2",
+    "@rescript/core": ">=1.0.0"
   }
 }
