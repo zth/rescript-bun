@@ -2,8 +2,13 @@
 
 let server = Bun.serve({
   port: 3000,
-  fetch: async (_request, _server) => {
-    Response.make("Welcome to Bun!")
+  fetch: async (request, _server) => {
+    let url = request->Globals.Request.url->URL.make
+
+    switch url->Globals.URL.pathname {
+    | "/" => Response.makeWithJsonUnsafe({"test": 1})
+    | _ => Response.make("404!")
+    }
   },
 })
 

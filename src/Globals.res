@@ -750,6 +750,11 @@ module Response = {
   external makeFromReadableStream: (ReadableStream.t<'t>, ~options: responseInit=?) => t =
     "Response"
 
+  /** HTTP response with JSON  */
+  external makeWithJson: (JSON.t, ~options: responseInitWithHeaders=?) => t = "Response.json"
+  external makeWithJsonUnsafe: ('jsonCompatiblePayload, ~options: responseInitWithHeaders=?) => t =
+    "Response.json"
+
   /** Create a new Response that redirects to url */
   external makeRedirect: (string, ~status: int=?) => t = "Response.redirect"
 
