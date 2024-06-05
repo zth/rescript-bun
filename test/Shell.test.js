@@ -7,7 +7,7 @@ Buntest.describe("shell", (function () {
         Buntest.test("basic commands work", (async function () {
                 var res = await $$Bun.$`echo "HELLO"`;
                 Buntest.expect(res.stdout.toString()).toBe("HELLO\n");
-              }), undefined);
+              }));
       }));
 
 export {

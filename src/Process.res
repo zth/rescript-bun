@@ -145,7 +145,7 @@ external nextTickApply5: (t, @uncurry ('a, 'b, 'c, 'd, 'e) => unit, 'a, 'b, 'c, 
   "nextTick"
 @send external hrtime: t => (int, int) = "hrtime"
 @send @scope("hrtime")
-external hrtimeBigInt: t => BigInt.t = "bigint"
+external hrtimeBigInt: t => bigint = "bigint"
 @get external stderr: t => Stream.Writable.t<Buffer.t> = "stderr"
 @get external stdin: t => Stream.Readable.t<Buffer.t> = "stdin"
 @get external stdout: t => Stream.Writable.t<Buffer.t> = "stdout"

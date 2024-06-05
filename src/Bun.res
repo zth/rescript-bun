@@ -1189,11 +1189,11 @@ module Hash = {
 
   module Algorithms = {
     module WyHash = {
-      external hashString: (string, ~seed: BigInt.t=?) => BigInt.t = "Bun.hash.wyhash"
-      external hashArrayBufferView: (ArrayBufferView.t, ~seed: BigInt.t=?) => BigInt.t =
+      external hashString: (string, ~seed: bigint=?) => bigint = "Bun.hash.wyhash"
+      external hashArrayBufferView: (ArrayBufferView.t, ~seed: bigint=?) => bigint =
         "Bun.hash.wyhash"
-      external hashArrayBuffer: (ArrayBuffer.t, ~seed: BigInt.t=?) => BigInt.t = "Bun.hash.wyhash"
-      external hashSharedArrayBuffer: (SharedArrayBuffer.t, ~seed: BigInt.t=?) => BigInt.t =
+      external hashArrayBuffer: (ArrayBuffer.t, ~seed: bigint=?) => bigint = "Bun.hash.wyhash"
+      external hashSharedArrayBuffer: (SharedArrayBuffer.t, ~seed: bigint=?) => bigint =
         "Bun.hash.wyhash"
     }
 
@@ -1224,12 +1224,12 @@ module Hash = {
     }
 
     module CityHash64 = {
-      external hashString: (string, ~seed: BigInt.t=?) => BigInt.t = "Bun.hash.cityHash64"
-      external hashArrayBufferView: (ArrayBufferView.t, ~seed: BigInt.t=?) => BigInt.t =
+      external hashString: (string, ~seed: bigint=?) => bigint = "Bun.hash.cityHash64"
+      external hashArrayBufferView: (ArrayBufferView.t, ~seed: bigint=?) => bigint =
         "Bun.hash.cityHash64"
-      external hashArrayBuffer: (ArrayBuffer.t, ~seed: BigInt.t=?) => BigInt.t =
+      external hashArrayBuffer: (ArrayBuffer.t, ~seed: bigint=?) => bigint =
         "Bun.hash.cityHash64"
-      external hashSharedArrayBuffer: (SharedArrayBuffer.t, ~seed: BigInt.t=?) => BigInt.t =
+      external hashSharedArrayBuffer: (SharedArrayBuffer.t, ~seed: bigint=?) => bigint =
         "Bun.hash.cityHash64"
     }
 
@@ -1252,12 +1252,12 @@ module Hash = {
     }
 
     module Murmur64v2 = {
-      external hashString: (string, ~seed: BigInt.t=?) => BigInt.t = "Bun.hash.murmur64v2"
-      external hashArrayBufferView: (ArrayBufferView.t, ~seed: BigInt.t=?) => BigInt.t =
+      external hashString: (string, ~seed: bigint=?) => bigint = "Bun.hash.murmur64v2"
+      external hashArrayBufferView: (ArrayBufferView.t, ~seed: bigint=?) => bigint =
         "Bun.hash.murmur64v2"
-      external hashArrayBuffer: (ArrayBuffer.t, ~seed: BigInt.t=?) => BigInt.t =
+      external hashArrayBuffer: (ArrayBuffer.t, ~seed: bigint=?) => bigint =
         "Bun.hash.murmur64v2"
-      external hashSharedArrayBuffer: (SharedArrayBuffer.t, ~seed: BigInt.t=?) => BigInt.t =
+      external hashSharedArrayBuffer: (SharedArrayBuffer.t, ~seed: bigint=?) => bigint =
         "Bun.hash.murmur64v2"
     }
   }
