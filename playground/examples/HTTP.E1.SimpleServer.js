@@ -3,8 +3,16 @@
 
 var server = Bun.serve({
       port: 3000,
-      fetch: (async function (_request, _server) {
-          return new Response("Welcome to Bun!", undefined);
+      fetch: (async function (request, _server) {
+          var url = new URL(request.url);
+          var match = url.pathname;
+          if (match === "/") {
+            return Response.json({
+                        test: 1
+                      });
+          } else {
+            return new Response("404!");
+          }
         })
     });
 
@@ -13,14 +21,14 @@ console.log("Listening on localhost: " + server.port.toString());
 var tlsServer = Bun.serve({
       tls: {
         ca: [
-          Bun.file("ca1.pem", undefined),
-          Bun.file("ca2.pem", undefined)
+          Bun.file("ca1.pem"),
+          Bun.file("ca2.pem")
         ],
-        cert: [Bun.file("cert.pem", undefined)],
-        key: [Bun.file("key.pem", undefined)]
+        cert: [Bun.file("cert.pem")],
+        key: [Bun.file("key.pem")]
       },
       fetch: (async function (_request, _server) {
-          return new Response("Welcome to Bun!", undefined);
+          return new Response("Welcome to Bun!");
         })
     });
 

@@ -5,7 +5,7 @@ import * as Buntest from "bun:test";
 Buntest.describe("Playing around with tests", (function () {
         Buntest.test("addition works", (function () {
                 Buntest.expect(2).toBe(2);
-              }), undefined);
+              }));
       }));
 
 export {

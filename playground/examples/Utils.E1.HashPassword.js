@@ -3,7 +3,7 @@
 
 var password = "super-secure-pa$$word";
 
-var hash = await Bun.password.hash(password, undefined);
+var hash = await Bun.password.hash(password);
 
 console.log(hash);
 
@@ -22,7 +22,7 @@ var bcryptHash = await Bun.password.hash(password, {
 
 console.log(bcryptHash);
 
-var isMatch = await Bun.password.verify(password, hash, undefined);
+var isMatch = await Bun.password.verify(password, hash);
 
 console.log(isMatch);
 

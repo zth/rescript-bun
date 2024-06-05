@@ -2,7 +2,7 @@
 
 import * as Core__Option from "@rescript/core/src/Core__Option.js";
 
-var response = await fetch("https://bun.sh", undefined);
+var response = await fetch("https://bun.sh");
 
 var html = await response.text();
 

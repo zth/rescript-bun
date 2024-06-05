@@ -9,7 +9,7 @@ rewriter.on("*", {
         })
     });
 
-var transformedResponse = rewriter.transform(new Response("<html><head></head><body><div>hellO!</div></body></html>", undefined));
+var transformedResponse = rewriter.transform(new Response("<html><head></head><body><div>hellO!</div></body></html>"));
 
 var html = await transformedResponse.text();
 

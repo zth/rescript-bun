@@ -9,7 +9,7 @@ var server = Bun.serve({
           var match = url.pathname;
           switch (match) {
             case "/" :
-                return new Response(Bun.file("index.html", undefined));
+                return new Response(Bun.file("index.html"));
             case "/action" :
                 var formData = await req.formData();
                 formData.get("name");
@@ -20,8 +20,8 @@ var server = Bun.serve({
                 if (typeof profilePicture === "string") {
                   return RescriptCore.panic("Must upload a profile picture");
                 }
-                await Bun.write("profilePicture.png", Bun.file(profilePicture, undefined));
-                return new Response("Success", undefined);
+                await Bun.write("profilePicture.png", Bun.file(profilePicture));
+                return new Response("Success");
             default:
               return new Response("Not Found", {
                           status: 404

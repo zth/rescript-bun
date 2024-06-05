@@ -15,11 +15,11 @@ function findInternalLinks(html) {
               }
               
             })
-        }).transform(new Response(html, undefined));
+        }).transform(new Response(html));
   return internalLinks;
 }
 
-var content = await fetch("https://bun.sh", undefined);
+var content = await fetch("https://bun.sh");
 
 var html = await content.text();
 

@@ -5,7 +5,7 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 var path = Nodepath.resolve(import.meta.dir, "test.txt");
 
-var file = Bun.file(path, undefined);
+var file = Bun.file(path);
 
 var resp = new Response(file);
 
@@ -13,7 +13,7 @@ console.log(Caml_option.nullable_to_opt(resp.headers.get("Content-Type")));
 
 var _server = Bun.serve({
       fetch: (async function (req, _server) {
-          return new Response(Bun.file(new URL(req.url).pathname, undefined));
+          return new Response(Bun.file(new URL(req.url).pathname));
         })
     });
 

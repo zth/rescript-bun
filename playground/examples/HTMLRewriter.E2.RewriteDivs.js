@@ -11,7 +11,7 @@ var rewriter = new HTMLRewriter().on("*", {
         })
     });
 
-var response = await fetch("https://bun.sh", undefined);
+var response = await fetch("https://bun.sh");
 
 var transformedResponse = rewriter.transform(response);
 

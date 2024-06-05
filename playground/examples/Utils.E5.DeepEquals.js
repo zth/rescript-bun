@@ -17,7 +17,7 @@ var b = {
   }
 };
 
-var equals = Bun.deepEquals(a, b, undefined);
+var equals = Bun.deepEquals(a, b);
 
 console.log(equals);
 
