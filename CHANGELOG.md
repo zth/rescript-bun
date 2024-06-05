@@ -1,5 +1,7 @@
 # main
 
+# 0.5.0
+
 - Add bindings for `Response.json()`. https://github.com/zth/rescript-bun/pull/5
 - Return JSON data with `Response.makeWithJson`
 - Return any data type with `Response.makeWithJsonUnsafe`
