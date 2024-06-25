@@ -2,6 +2,24 @@ open Types
 // TODO: mocking etc
 
 /**
+   * Create mocks with the `mock` function.
+   *
+   * ```ts
+   * import { test, expect, mock } from "bun:test";
+   * const random = mock(() => Math.random());
+   *
+   * test("random", async () => {
+   * const val = random();
+   * expect(val).toBeGreaterThan(0);
+   * expect(random).toHaveBeenCalled();
+   * expect(random).toHaveBeenCalledTimes(1);
+   * });
+   * ```
+   */
+@module("bun:test")
+external mock: (unit => 'value) => unit => 'value = "mock"
+
+/**
    * Control the system time used by:
    * - `Date.now()`
    * - `new Date()`
