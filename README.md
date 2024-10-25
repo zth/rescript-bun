@@ -1,5 +1,7 @@
 # rescript-bun
 
+_Check out the `2.x` branch for ReScript v12 support._
+
 Use [Bun](https://bun.sh) with ReScript.
 
 > **Currently alpha state software**. You're encouraged to start using it, but please report all issues. There will be both bindings missing and some bindings will probably be wrong/suboptimal. We're going to work through the API surface as we go. Report all issues you find!
