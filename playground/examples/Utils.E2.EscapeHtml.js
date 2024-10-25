@@ -3,7 +3,4 @@
 
 console.log(Bun.escapeHTML("<script>alert('Hello World!')</script>"));
 
-export {
-  
-}
 /*  Not a pure module */

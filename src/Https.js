@@ -2,23 +2,23 @@
 
 import * as Tls$RescriptBun from "./Tls.js";
 
-var Events = {};
+let Events = {};
 
-var Impl = {};
+let Impl = {};
 
-var HttpsServer = {
+let HttpsServer = {
   Events: Events,
   Impl: Impl
 };
 
-var Events$1 = {};
+let Events$1 = {};
 
-var Agent = {
+let Agent = {
   Events: Events$1
 };
 
 export {
-  HttpsServer ,
-  Agent ,
+  HttpsServer,
+  Agent,
 }
 /* Tls-RescriptBun Not a pure module */

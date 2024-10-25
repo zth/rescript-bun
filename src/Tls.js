@@ -2,26 +2,26 @@
 
 import * as Net$RescriptBun from "./Net.js";
 
-var Events = {};
+let Events = {};
 
-var Impl = {};
+let Impl = {};
 
-var TlsSocket = {
+let TlsSocket = {
   Events: Events,
   Impl: Impl
 };
 
-var Events$1 = {};
+let Events$1 = {};
 
-var Impl$1 = {};
+let Impl$1 = {};
 
-var TlsServer = {
+let TlsServer = {
   Events: Events$1,
   Impl: Impl$1
 };
 
 export {
-  TlsSocket ,
-  TlsServer ,
+  TlsSocket,
+  TlsServer,
 }
 /* Net-RescriptBun Not a pure module */

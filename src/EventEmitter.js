@@ -10,7 +10,7 @@ function Make($star) {
 }
 
 export {
-  Impl ,
-  Make ,
+  Impl,
+  Make,
 }
 /* No side effect */

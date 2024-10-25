@@ -2,13 +2,10 @@
 
 import * as Buntest from "bun:test";
 
-Buntest.describe("Playing around with tests", (function () {
-        Buntest.test("addition works", (function () {
-                Buntest.expect(2).toBe(2);
-              }));
-      }));
+Buntest.describe("Playing around with tests", () => {
+  Buntest.test("addition works", () => {
+    Buntest.expect(2).toBe(2);
+  });
+});
 
-export {
-  
-}
 /*  Not a pure module */

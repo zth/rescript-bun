@@ -5,7 +5,4 @@ console.log(Bun.version);
 
 console.log(Bun.revision);
 
-export {
-  
-}
 /*  Not a pure module */

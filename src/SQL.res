@@ -17,7 +17,7 @@ type rec param =
 | @as(null) Null
 | String(string)
 | Number(float)
-| Dict(Core__Dict.t<param>)
+| Dict(dict<param>)
 | Array(array<param>)
 | Query(SQLQuery.t<param>)
 

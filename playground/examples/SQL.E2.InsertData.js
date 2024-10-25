@@ -3,51 +3,63 @@
 import * as $$Bun from "bun";
 import * as SQL$RescriptBun from "rescript-bun/src/SQL.js";
 
-var db = new $$Bun.SQL({
-      filename: ":memory:",
-      adapter: "sqlite"
-    });
+let db = new $$Bun.SQL({
+  filename: ":memory:",
+  adapter: "sqlite"
+});
 
-await SQL$RescriptBun.query(db, ["\n  CREATE TABLE users (\n      name TEXT NOT NULL,\n      email TEXT PRIMARY KEY\n  );\n"], []);
+await SQL$RescriptBun.query(db, [`
+  CREATE TABLE users (
+      name TEXT NOT NULL,
+      email TEXT PRIMARY KEY
+  );
+`], []);
 
 async function insertUser(name, email) {
   return await SQL$RescriptBun.query(db, [
-              "\n  INSERT INTO users (name, email) \n  VALUES (",
-              ", ",
-              ")\n  RETURNING *\n"
-            ], [
-              name,
-              email
-            ]);
+    `
+  INSERT INTO users (name, email) 
+  VALUES (`,
+    `, `,
+    `)
+  RETURNING *
+`
+  ], [
+    name,
+    email
+  ]);
 }
 
-var userData = {
+let userData = {
   name: "Alice",
   email: "alice@example.com"
 };
 
-var newUser = await SQL$RescriptBun.query(db, [
-      "\n  INSERT INTO users ",
-      "\n  RETURNING *\n"
-    ], [SQL$RescriptBun.object(db, userData, [
-            "name",
-            "email"
-          ])]);
+let newUser = await SQL$RescriptBun.query(db, [
+  `
+  INSERT INTO users `,
+  `
+  RETURNING *
+`
+], [SQL$RescriptBun.object(db, userData, [
+    "name",
+    "email"
+  ])]);
 
 console.log(newUser);
 
 await insertUser("Bob", "bob@email.com");
 
-var users = await SQL$RescriptBun.query(db, ["SELECT * FROM users"], []);
+let users = await SQL$RescriptBun.query(db, [`SELECT * FROM users`], []);
 
-if (!(!(users instanceof Promise) && !Array.isArray(users) && (users === null || typeof users !== "object") && typeof users !== "number" && typeof users !== "string" && typeof users !== "boolean") && Array.isArray(users)) {
+if (Array.isArray(users)) {
   console.log(users);
 }
 
 export {
-  db ,
-  insertUser ,
-  userData ,
-  newUser ,
+  db,
+  insertUser,
+  userData,
+  newUser,
 }
 /* db Not a pure module */

@@ -5,7 +5,4 @@ console.log(import.meta.dir);
 
 console.log(import.meta.file);
 
-export {
-  
-}
 /*  Not a pure module */
