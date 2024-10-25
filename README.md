@@ -15,7 +15,7 @@ You need to be on ReScript v12 `>=12.0.0-alpha.4`.
 Install `rescript-bun`:
 
 ```bash
-npm i rescript-bun@2.0.0-alpha.1
+npm i rescript-bun@next
 ```
 
 Include them in your `rescript.json`:
