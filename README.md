@@ -10,19 +10,19 @@ Use [Bun](https://bun.sh) with ReScript.
 
 **Template repo to get up and running quickly: https://github.com/zth/rescript-bun-starter**
 
-You need to be on ReScript v11 `>=11.1.0` and Core `>=1.3.0`. This is designed for uncurried mode so you should use that as well (`"uncurried": true` in your bsconfig/`rescript.json`).
+You need to be on ReScript v12 `>=12.0.0-alpha.4`.
 
-Install `rescript-bun` and `@rescript/core`:
+Install `rescript-bun`:
 
 ```bash
-npm i rescript-bun @rescript/core
+npm i rescript-bun@2.0.0-alpha.1
 ```
 
 Include them in your `rescript.json`:
 
 ```json
 {
-  "bs-dependencies": ["@rescript/core", "rescript-bun"]
+  "bs-dependencies": ["rescript-bun"]
 }
 ```
 
@@ -32,11 +32,7 @@ Include them in your `rescript.json`:
 
 ```json
 {
-  "bsc-flags": [
-    "-open RescriptCore",
-    "-open RescriptBun",
-    "-open RescriptBun.Globals"
-  ]
+  "bsc-flags": ["-open RescriptBun", "-open RescriptBun.Globals"]
 }
 ```
 
@@ -210,7 +206,7 @@ Currently, bindings exist for the most common things. There's still a good amoun
 
 ## Other things to figure out
 
-- How to reuse/contribute to [`rescript-webapi`](https://github.com/TheSpyder/rescript-webapi) instead of rolling our own bindings. I've intentionally not reused any other existing library because I wanted to start from scratch and follow ReScript v11 idioms as much as possible. But once all of this settles, we need to figure out and share the common denominator with `rescript-webapi` and other similar projects to this.
+- How to reuse/contribute to [`rescript-webapi`](https://github.com/TheSpyder/rescript-webapi) instead of rolling our own bindings. I've intentionally not reused any other existing library because I wanted to start from scratch and follow ReScript v11+ idioms as much as possible. But once all of this settles, we need to figure out and share the common denominator with `rescript-webapi` and other similar projects to this.
 
 ## Contributing
 

@@ -1,5 +1,17 @@
 # main
 
+A note about versions:
+
+- `2.x.x` is for ReScript v12 and above.
+- `0.x.x` is for ReScript v11 and below.
+
+# 2.0.0-alpha.1
+
+`rescript-bun` is now compatible with ReScript v12.
+
+- Remove `@rescript/core` since it now ships with the compiler.
+- Remove `BigInt` since it now ships with the compiler.
+
 ## 0.6.0
 
 ### Minor Changes

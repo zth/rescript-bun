@@ -17,7 +17,5 @@
     "module": "esmodule",
     "in-source": true
   },
-  "suffix": ".js",
-  "bs-dependencies": ["@rescript/core"],
-  "bsc-flags": ["-open RescriptCore"]
+  "suffix": ".js"
 }
