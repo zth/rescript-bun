@@ -79,7 +79,7 @@ let server = Bun.serve({
       request
       ->Request.headers
       ->Headers.get("x-user-name")
-      ->Option.getWithDefault("Unknown user")
+      ->Option.getOr("Unknown user")
 
     Response.make(`Hello ${userName}!`, ~options={status: 200})
   },
