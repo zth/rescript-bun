@@ -459,6 +459,26 @@ type genericServeOptions = {
   serverNames?: Dict.t<tlsOptions>,
 }
 
+module BunRequest = {
+  type t = Request.t
+  @get
+  external params: t => Dict.t<string> = "params"
+  @get
+  external cookies: t => Iterator.t<(string, string)> = "cookies"
+}
+
+type routeHandler = (BunRequest.t, Server.t) => Promise.t<Response.t>
+
+type routeHandlerObject = {
+  @as("DELETE") delete?: routeHandler,
+  @as("GET") get?: routeHandler,
+  @as("HEAD") head?: routeHandler,
+  @as("OPTIONS") options?: routeHandler,
+  @as("PATCH") patch?: routeHandler,
+  @as("POST") post?: routeHandler,
+  @as("PUT") put?: routeHandler
+}
+
 type serveOptions = {
   ...genericServeOptions,
   /*
@@ -493,6 +513,11 @@ type serveOptions = {
    *
    */
   fetch: (Request.t, Server.t) => promise<Response.t>,
+
+  /*
+   * Handle HTTP requests with a router
+   */
+  routes?: Dict.t<routeHandlerObject>,
 }
 
 // TODO(future): Bind all `serve` versions when needed: https://github.com/oven-sh/bun/blob/c08e8a76eff713f87a1f0791bba803c2b110a7a7/packages/bun-types/bun.d.ts#L86
@@ -2823,3 +2848,4 @@ module Glob = {
   @send
   external match: (t, string) => bool = "match"
 }
+
