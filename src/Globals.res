@@ -710,7 +710,7 @@ module URLSearchParams = {
 }
 
 module Response = {
-  type t
+  type t = private {}
 
   type baseResponseInit = {
     /** @default 200 */

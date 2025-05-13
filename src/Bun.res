@@ -467,16 +467,18 @@ module BunRequest = {
   external cookies: t => Iterator.t<(string, string)> = "cookies"
 }
 
-type routeHandler = (BunRequest.t, Server.t) => promise<Response.t>
+@unboxed
+type routeHandlerForMethod =
+  Static(Response.t) | Handler((BunRequest.t, Server.t) => promise<Response.t>)
 
 type routeHandlerObject = {
-  @as("DELETE") delete?: routeHandler,
-  @as("GET") get?: routeHandler,
-  @as("HEAD") head?: routeHandler,
-  @as("OPTIONS") options?: routeHandler,
-  @as("PATCH") patch?: routeHandler,
-  @as("POST") post?: routeHandler,
-  @as("PUT") put?: routeHandler
+  @as("DELETE") delete?: routeHandlerForMethod,
+  @as("GET") get?: routeHandlerForMethod,
+  @as("HEAD") head?: routeHandlerForMethod,
+  @as("OPTIONS") options?: routeHandlerForMethod,
+  @as("PATCH") patch?: routeHandlerForMethod,
+  @as("POST") post?: routeHandlerForMethod,
+  @as("PUT") put?: routeHandlerForMethod
 }
 
 type serveOptions = {
