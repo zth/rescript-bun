@@ -467,7 +467,7 @@ module BunRequest = {
   external cookies: t => Iterator.t<(string, string)> = "cookies"
 }
 
-type routeHandler = (BunRequest.t, Server.t) => Promise.t<Response.t>
+type routeHandler = (BunRequest.t, Server.t) => promise<Response.t>
 
 type routeHandlerObject = {
   @as("DELETE") delete?: routeHandler,
