@@ -459,6 +459,28 @@ type genericServeOptions = {
   serverNames?: Dict.t<tlsOptions>,
 }
 
+module BunRequest = {
+  type t = Request.t
+  @get
+  external params: t => Dict.t<string> = "params"
+  @get
+  external cookies: t => Iterator.t<(string, string)> = "cookies"
+}
+
+@unboxed
+type routeHandlerForMethod =
+  Static(Response.t) | Handler((BunRequest.t, Server.t) => promise<Response.t>)
+
+type routeHandlerObject = {
+  @as("DELETE") delete?: routeHandlerForMethod,
+  @as("GET") get?: routeHandlerForMethod,
+  @as("HEAD") head?: routeHandlerForMethod,
+  @as("OPTIONS") options?: routeHandlerForMethod,
+  @as("PATCH") patch?: routeHandlerForMethod,
+  @as("POST") post?: routeHandlerForMethod,
+  @as("PUT") put?: routeHandlerForMethod
+}
+
 type serveOptions = {
   ...genericServeOptions,
   /*
@@ -493,6 +515,11 @@ type serveOptions = {
    *
    */
   fetch: (Request.t, Server.t) => promise<Response.t>,
+
+  /*
+   * Handle HTTP requests with a router
+   */
+  routes?: Dict.t<routeHandlerObject>,
 }
 
 // TODO(future): Bind all `serve` versions when needed: https://github.com/oven-sh/bun/blob/c08e8a76eff713f87a1f0791bba803c2b110a7a7/packages/bun-types/bun.d.ts#L86

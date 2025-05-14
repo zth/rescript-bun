@@ -10,6 +10,8 @@ var Server = {};
 
 var BunFile = {};
 
+var BunRequest = {};
+
 var Destination = {};
 
 var Input = {};
@@ -172,6 +174,7 @@ export {
   Env ,
   Server ,
   BunFile ,
+  BunRequest ,
   Write ,
   TypedArrayOrBuffer ,
   Peek ,
