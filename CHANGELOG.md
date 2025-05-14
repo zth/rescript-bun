@@ -2,6 +2,8 @@
 
 _Check out the `2.x` branch for ReScript v12 support._
 
+- Add bindings to `routes` in `Bun.serve`. https://github.com/zth/rescript-bun/pull/11
+
 # 0.5.0
 
 - Add bindings for `Response.json()`. https://github.com/zth/rescript-bun/pull/5
