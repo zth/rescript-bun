@@ -25,7 +25,7 @@ type bufferEncoding =
 
 // TODO
 module ArrayBufferView = {
-  type t
+  type t = {}
 }
 
 // TODO
