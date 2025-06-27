@@ -1,5 +1,12 @@
 # main
 
+## 0.6.0
+
+### Minor Changes
+
+- c6b9a03: Add bindings to `routes` in `Bun.serve`.
+- c6b9a03: Add basic SQLite bindings in `BunSqlite`.
+
 _Check out the `2.x` branch for ReScript v12 support._
 
 - Add bindings to `routes` in `Bun.serve`. https://github.com/zth/rescript-bun/pull/11
