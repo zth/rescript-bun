@@ -6,7 +6,9 @@
   "description": "Use Bun with ReScript.",
   "scripts": {
     "build": "rescript build",
-    "test": "bun test test/*.test.js"
+    "test": "bun test test/*.test.js",
+    "changeset": "changeset",
+    "release": "changeset publish"
   },
   "files": [
     "rescript.json",
@@ -20,11 +22,12 @@
   "author": "Gabriel Nordeborn",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.29.5",
     "@rescript/core": "1.3.0",
     "rescript": "11.1.1"
   },
   "peerDependencies": {
-    "rescript": ">=11.1.0",
-    "@rescript/core": ">=1.3.0"
+    "@rescript/core": ">=1.3.0",
+    "rescript": ">=11.1.0"
   }
 }
