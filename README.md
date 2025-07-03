@@ -218,6 +218,11 @@ Contributions are very welcome. We're aiming to cover close to 100% of the Bun A
 
 If you do want to contribute, _please open an issue saying you're starting work on module X_. So we don't accidentally double work.
 
+## Versioning and releasing
+
+This project uses [Changesets](https://github.com/changesets/changesets) to manage versions and changelogs. Run `npm run changeset` to create a changeset describing your changes. When changes are merged to `main`, a GitHub Action opens a release PR and merging that will publish a new version.
+
+
 ## Bindings style
 
 _This will be fleshed out in a short while_.
