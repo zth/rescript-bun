@@ -5,12 +5,30 @@ A note about versions:
 - `2.x.x` is for ReScript v12 and above.
 - `0.x.x` is for ReScript v11 and below.
 
+# 2.0.0-alpha.2
+
+`rescript-bun` is now compatible with ReScript v12 beta 3.
+
+- Include changes of 0.6
+
 # 2.0.0-alpha.1
 
 `rescript-bun` is now compatible with ReScript v12.
 
 - Remove `@rescript/core` since it now ships with the compiler.
 - Remove `BigInt` since it now ships with the compiler.
+
+## 0.6.0
+
+### Minor Changes
+
+- c6b9a03: Add bindings to `routes` in `Bun.serve`.
+- c6b9a03: Add basic SQLite bindings in `BunSqlite`.
+
+_Check out the `2.x` branch for ReScript v12 support._
+
+- Add bindings to `routes` in `Bun.serve`. https://github.com/zth/rescript-bun/pull/11
+- Add basic SQLite bindings in `BunSqlite`. https://github.com/zth/rescript-bun/pull/12
 
 # 0.5.0
 

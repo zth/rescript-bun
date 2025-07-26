@@ -1,5 +1,7 @@
 # rescript-bun
 
+_Check out the `2.x` branch for ReScript v12 support._
+
 Use [Bun](https://bun.sh) with ReScript.
 
 > **Currently alpha state software**. You're encouraged to start using it, but please report all issues. There will be both bindings missing and some bindings will probably be wrong/suboptimal. We're going to work through the API surface as we go. Report all issues you find!
@@ -73,7 +75,7 @@ let server = Bun.serve({
       request
       ->Request.headers
       ->Headers.get("x-user-name")
-      ->Option.getWithDefault("Unknown user")
+      ->Option.getOr("Unknown user")
 
     Response.make(`Hello ${userName}!`, ~options={status: 200})
   },
@@ -211,3 +213,12 @@ Currently, bindings exist for the most common things. There's still a good amoun
 Contributions are very welcome. We're aiming to cover close to 100% of the Bun API surface, which is quite huge task. But, it's definitively possible and the initial large effort pays dividends over time.
 
 If you do want to contribute, _please open an issue saying you're starting work on module X_. So we don't accidentally double work.
+
+## Versioning and releasing
+
+This project uses [Changesets](https://github.com/changesets/changesets) to manage versions and changelogs. Run `npm run changeset` to create a changeset describing your changes. When changes are merged to `main`, a GitHub Action opens a release PR and merging that will publish a new version.
+
+
+## Bindings style
+
+_This will be fleshed out in a short while_.

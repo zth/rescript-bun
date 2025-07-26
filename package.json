@@ -1,12 +1,15 @@
 {
   "name": "rescript-bun",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "main": "src/Bun.js",
   "sideEffects": false,
   "description": "Use Bun with ReScript.",
   "scripts": {
     "build": "rescript build",
-    "test": "bun test test/*.test.js"
+    "pretest": "rescript build --dev",
+    "test": "bun test test/*.test.js",
+    "changeset": "changeset",
+    "release": "changeset publish"
   },
   "files": [
     "rescript.json",
@@ -20,9 +23,9 @@
   "author": "Gabriel Nordeborn",
   "license": "MIT",
   "devDependencies": {
-    "rescript": "12.0.0-alpha.4"
+    "rescript": "12.0.0-beta.3"
   },
   "peerDependencies": {
-    "rescript": "12.0.0-alpha.4"
+    "rescript": "12.0.0-beta.3"
   }
 }
