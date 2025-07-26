@@ -37,13 +37,13 @@ module Events = {
   external onUncaughtException: (
     t,
     @as("uncaughtException") _,
-    @uncurry (Js.Exn.t, string) => unit,
+    @uncurry (JsExn.t, string) => unit,
   ) => t = "on"
   @send
   external onUnhandledRejection: (
     t,
     @as("unhandledRejection") _,
-    @uncurry (Js.Exn.t, Js.Promise.t<'a>) => unit,
+    @uncurry (JsExn.t, Js.Promise.t<'a>) => unit,
   ) => t = "on"
   @send
   external onWarning: (t, @as("warning") _, @uncurry (warning => unit)) => t = "on"
@@ -70,13 +70,13 @@ module Events = {
   external offUncaughtException: (
     t,
     @as("uncaughtException") _,
-    @uncurry (Js.Exn.t, string) => unit,
+    @uncurry (JsExn.t, string) => unit,
   ) => t = "off"
   @send
   external offUnhandledRejection: (
     t,
     @as("unhandledRejection") _,
-    @uncurry (Js.Exn.t, Js.Promise.t<'a>) => unit,
+    @uncurry (JsExn.t, Js.Promise.t<'a>) => unit,
   ) => t = "off"
   @send
   external offWarning: (t, @as("warning") _, @uncurry (warning => unit)) => t = "off"
@@ -103,13 +103,13 @@ module Events = {
   external onUncaughtExceptionOnce: (
     t,
     @as("uncaughtException") _,
-    @uncurry (Js.Exn.t, string) => unit,
+    @uncurry (JsExn.t, string) => unit,
   ) => t = "once"
   @send
   external onUnhandledRejectionOnce: (
     t,
     @as("unhandledRejection") _,
-    @uncurry (Js.Exn.t, Js.Promise.t<'a>) => unit,
+    @uncurry (JsExn.t, Js.Promise.t<'a>) => unit,
   ) => t = "once"
   @send
   external onWarningOnce: (t, @as("warning") _, @uncurry (warning => unit)) => t = "once"

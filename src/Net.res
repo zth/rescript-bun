@@ -51,7 +51,7 @@ module Socket = {
     external onError: (
       subtype<'w, 'r, 'ty>,
       @as("error") _,
-      @uncurry Js.Exn.t => unit,
+      @uncurry JsExn.t => unit,
     ) => subtype<'w, 'r, 'ty> = "on"
     @send
     external onLookup: (
@@ -106,7 +106,7 @@ module Socket = {
     external offError: (
       subtype<'w, 'r, 'ty>,
       @as("error") _,
-      @uncurry Js.Exn.t => unit,
+      @uncurry JsExn.t => unit,
     ) => subtype<'w, 'r, 'ty> = "off"
     @send
     external offLookup: (
@@ -161,7 +161,7 @@ module Socket = {
     external onErrorOnce: (
       subtype<'w, 'r, 'ty>,
       @as("error") _,
-      @uncurry Js.Exn.t => unit,
+      @uncurry JsExn.t => unit,
     ) => subtype<'w, 'r, 'ty> = "once"
     @send
     external onLookupOnce: (
@@ -195,7 +195,7 @@ module Socket = {
     external connecting: subtype<'w, 'r, 'ty> => bool = "connecting"
     @get external destroyed: subtype<'w, 'r, 'ty> => bool = "destroyed"
     @send
-    external destroy: (subtype<'w, 'r, 'ty>, ~error: option<Js.Exn.t>) => subtype<'w, 'r, 'ty> =
+    external destroy: (subtype<'w, 'r, 'ty>, ~error: option<JsExn.t>) => subtype<'w, 'r, 'ty> =
       "destroy"
     @get
     external localAddress: subtype<'w, 'r, 'ty> => string = "localAddress"
@@ -360,11 +360,11 @@ module Server = {
     @send
     external close: (
       subtype<'ty>,
-      ~callback: Js.nullable<Js.Exn.t> => unit=?,
+      ~callback: Js.nullable<JsExn.t> => unit=?,
       unit,
     ) => subtype<'ty> = "close"
     @send
-    external getConnections: (subtype<'ty>, (Js.nullable<Js.Exn.t>, int) => unit) => subtype<'ty> =
+    external getConnections: (subtype<'ty>, (Js.nullable<JsExn.t>, int) => unit) => subtype<'ty> =
       "getConnections"
     @set
     external setMaxConnections: (subtype<'ty>, int) => unit = "maxConnections"
@@ -437,10 +437,10 @@ module TcpServer = {
   module Impl = {
     include Events
     @send
-    external close: (subtype<'ty>, ~callback: Js.nullable<Js.Exn.t> => unit) => subtype<'ty> =
+    external close: (subtype<'ty>, ~callback: Js.nullable<JsExn.t> => unit) => subtype<'ty> =
       "close"
     @send
-    external getConnections: (subtype<'ty>, (Js.nullable<Js.Exn.t>, int) => unit) => subtype<'ty> =
+    external getConnections: (subtype<'ty>, (Js.nullable<JsExn.t>, int) => unit) => subtype<'ty> =
       "getConnections"
     @set
     external setMaxConnections: (subtype<'ty>, int) => unit = "maxConnections"
@@ -524,10 +524,10 @@ module IcpServer = {
   module Impl = {
     include Events
     @send
-    external close: (subtype<'ty>, ~callback: Js.nullable<Js.Exn.t> => unit) => subtype<'ty> =
+    external close: (subtype<'ty>, ~callback: Js.nullable<JsExn.t> => unit) => subtype<'ty> =
       "close"
     @send
-    external getConnections: (subtype<'ty>, (Js.nullable<Js.Exn.t>, int) => unit) => subtype<'ty> =
+    external getConnections: (subtype<'ty>, (Js.nullable<JsExn.t>, int) => unit) => subtype<'ty> =
       "getConnections"
     @set
     external setMaxConnections: (subtype<'ty>, int) => unit = "maxConnections"

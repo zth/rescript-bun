@@ -28,7 +28,7 @@ module Common = {
     external onError: (
       subtype<'ty> as 'stream,
       @as("error") _,
-      @uncurry (Js.Exn.t => unit),
+      @uncurry (JsExn.t => unit),
     ) => 'stream = "on"
 
     @send
@@ -42,7 +42,7 @@ module Common = {
     external offError: (
       subtype<'ty> as 'stream,
       @as("error") _,
-      @uncurry (Js.Exn.t => unit),
+      @uncurry (JsExn.t => unit),
     ) => 'stream = "off"
 
     @send
@@ -63,7 +63,7 @@ module Common = {
     external onErrorOnce: (
       subtype<'ty> as 'stream,
       @as("error") _,
-      @uncurry (Js.Exn.t => unit),
+      @uncurry (JsExn.t => unit),
     ) => 'stream = "once"
 
     @send
@@ -75,7 +75,7 @@ module Common = {
     @send
     external destroy: (subtype<[> kind]> as 'stream) => 'stream = "destroy"
     @send
-    external destroyWithError: (subtype<[> kind]> as 'stream, Js.Exn.t) => 'stream = "destroy"
+    external destroyWithError: (subtype<[> kind]> as 'stream, JsExn.t) => 'stream = "destroy"
     @get external destroyed: subtype<[> kind]> => bool = "destroyed"
   }
   include Impl
@@ -169,7 +169,7 @@ module Writable = {
     external writeWith: (
       subtype<[> writable<'w>]>,
       'w,
-      ~callback: Js.Nullable.t<Js.Exn.t> => unit=?,
+      ~callback: Js.Nullable.t<JsExn.t> => unit=?,
       unit,
     ) => bool = "write"
     @get
@@ -203,21 +203,21 @@ module Writable = {
     ~autoDestroy: bool=?,
     ~destroy: @this (
       t<'w>,
-      ~error: Js.nullable<Js.Exn.t>,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~error: Js.nullable<JsExn.t>,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit=?,
-    ~final: @this (t<'w>, ~callback: (~error: option<Js.Exn.t>) => unit) => unit=?,
+    ~final: @this (t<'w>, ~callback: (~error: option<JsExn.t>) => unit) => unit=?,
     ~writev: @this (
       t<'w>,
       ~data: array<chunk<'w>>,
       ~encoding: StringEncoding.t,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit=?,
     ~write: @this (
       t<'w>,
       ~data: 'w,
       ~encoding: StringEncoding.t,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit,
     unit,
   ) => makeOptions<'w> = ""
@@ -233,21 +233,21 @@ module Writable = {
     ~autoDestroy: bool=?,
     ~destroy: @this (
       objStream<'w>,
-      ~error: Js.nullable<Js.Exn.t>,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~error: Js.nullable<JsExn.t>,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit=?,
-    ~final: @this (objStream<'w>, ~callback: (~error: option<Js.Exn.t>) => unit) => unit=?,
+    ~final: @this (objStream<'w>, ~callback: (~error: option<JsExn.t>) => unit) => unit=?,
     ~writev: @this (
       objStream<'w>,
       ~data: array<chunk<'w>>,
       ~encoding: Js.null<StringEncoding.t>,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit=?,
     ~write: @this (
       objStream<'w>,
       ~data: 'w,
       ~encoding: Js.null<StringEncoding.t>,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit,
     unit,
   ) => makeOptionsObjMode<'w> = ""
@@ -404,8 +404,8 @@ module Readable = {
     ~autoDestroy: bool=?,
     ~destroy: @this (
       t<'r>,
-      ~error: Js.nullable<Js.Exn.t>,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~error: Js.nullable<JsExn.t>,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit,
     ~read: @this (t<'r>, ~size: Js.nullable<int>) => unit,
     unit,
@@ -422,8 +422,8 @@ module Readable = {
     ~autoDestroy: bool=?,
     ~destroy: @this (
       objStream<'r>,
-      ~error: Js.nullable<Js.Exn.t>,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~error: Js.nullable<JsExn.t>,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit,
     ~read: @this (objStream<'r>, ~size: Js.nullable<int>) => unit,
     unit,
@@ -461,22 +461,22 @@ module Duplex = {
     ~autoDestroy: bool=?,
     ~destroy: @this (
       t<'w, 'r>,
-      ~error: Js.nullable<Js.Exn.t>,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~error: Js.nullable<JsExn.t>,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit=?,
-    ~final: @this (t<'w, 'r>, ~data: 'w, ~callback: (~error: option<Js.Exn.t>) => unit) => unit=?,
+    ~final: @this (t<'w, 'r>, ~data: 'w, ~callback: (~error: option<JsExn.t>) => unit) => unit=?,
     ~writev: @this (
       t<'w, 'r>,
       ~data: array<chunk<'w>>,
       ~encoding: StringEncoding.t,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit=?,
     ~read: @this (t<'w, 'r>, ~size: Js.nullable<int>) => unit,
     ~write: @this (
       t<'w, 'r>,
       ~data: 'w,
       ~encoding: StringEncoding.t,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit,
     unit,
   ) => makeOptions<'w, 'r> = ""
@@ -494,22 +494,22 @@ module Duplex = {
     ~autoDestroy: bool=?,
     ~destroy: @this (
       objStream<'w, 'r>,
-      ~error: Js.nullable<Js.Exn.t>,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~error: Js.nullable<JsExn.t>,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit=?,
-    ~final: @this (objStream<'w, 'r>, ~callback: (~error: option<Js.Exn.t>) => unit) => unit=?,
+    ~final: @this (objStream<'w, 'r>, ~callback: (~error: option<JsExn.t>) => unit) => unit=?,
     ~writev: @this (
       objStream<'w, 'r>,
       ~data: array<chunk<'w>>,
       ~encoding: StringEncoding.t,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit=?,
     ~read: @this (objStream<'w, 'r>, ~size: Js.nullable<int>) => unit,
     ~write: @this (
       objStream<'w, 'r>,
       ~data: 'w,
       ~encoding: StringEncoding.t,
-      ~callback: (~error: option<Js.Exn.t>) => unit,
+      ~callback: (~error: option<JsExn.t>) => unit,
     ) => unit,
     unit,
   ) => makeOptionsObjMode<'w, 'r> = ""
@@ -545,11 +545,11 @@ module Transform = {
       t<'w, 'r>,
       ~data: 'w,
       ~encoding: StringEncoding.t,
-      ~callback: (~error: option<Js.Exn.t>, ~data: option<'r>) => unit,
+      ~callback: (~error: option<JsExn.t>, ~data: option<'r>) => unit,
     ) => unit,
     ~flush: @this (
       t<'w, 'r>,
-      ~callback: (~error: option<Js.Exn.t>, ~data: option<'r>) => unit,
+      ~callback: (~error: option<JsExn.t>, ~data: option<'r>) => unit,
     ) => unit,
     unit,
   ) => makeOptions<'w, 'r> = ""
@@ -568,11 +568,11 @@ module Transform = {
       objStream<'w, 'r>,
       ~data: 'w,
       ~encoding: StringEncoding.t,
-      ~callback: (~error: option<Js.Exn.t>, ~data: option<'r>) => unit,
+      ~callback: (~error: option<JsExn.t>, ~data: option<'r>) => unit,
     ) => unit,
     ~flush: @this (
       objStream<'w, 'r>,
-      ~callback: (~error: option<Js.Exn.t>, ~data: option<'r>) => unit,
+      ~callback: (~error: option<JsExn.t>, ~data: option<'r>) => unit,
     ) => unit,
     unit,
   ) => makeOptionsObjMode<'w, 'r> = ""
@@ -611,13 +611,13 @@ include Events
 type cleanupFn = unit => unit
 
 @module("node:stream")
-external finished: (subtype<'ty>, Js.nullable<Js.Exn.t> => unit) => cleanupFn = "finished"
+external finished: (subtype<'ty>, Js.nullable<JsExn.t> => unit) => cleanupFn = "finished"
 
 @module("node:stream")
 external pipeline2: (
   subtype<[> readable<'t1>] as 'src>,
   subtype<[> writable<'t1>] as 'dest>,
-  Js.nullable<Js.Exn.t> => unit,
+  Js.nullable<JsExn.t> => unit,
 ) => subtype<[> writable<'t1>] as 'dest> = "pipeline"
 
 @module("node:stream")
@@ -625,7 +625,7 @@ external pipeline3: (
   subtype<[> readable<'t1>] as 'src>,
   subtype<[> writable<'t1> | readable<'t2>] as 'kindA>,
   subtype<[> writable<'t2>] as 'dest>,
-  Js.nullable<Js.Exn.t> => unit,
+  Js.nullable<JsExn.t> => unit,
 ) => subtype<[> writable<'t2>] as 'dest> = "pipeline"
 @module("node:stream")
 external pipeline4: (
@@ -633,5 +633,5 @@ external pipeline4: (
   subtype<[> writable<'t1> | readable<'t2>] as 'kindA>,
   subtype<[> writable<'t2> | readable<'t3>] as 'kindA>,
   subtype<[> writable<'t3>] as 'dest>,
-  Js.nullable<Js.Exn.t> => unit,
+  Js.nullable<JsExn.t> => unit,
 ) => subtype<[> writable<'t3>] as 'dest> = "pipeline"

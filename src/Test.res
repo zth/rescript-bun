@@ -923,7 +923,7 @@ module Expect = {
   external toThrow: (t<_>, ~expected: expectedToThrow=?) => unit = "toThrow"
 
   @send
-  external toThrowThisError: (t<_>, Error.t) => unit = "toThrow"
+  external toThrowThisError: (t<_>, JsError.t) => unit = "toThrow"
 
   /**
      * Asserts that a value matches a regular expression or includes a substring.

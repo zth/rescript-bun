@@ -88,7 +88,7 @@ module Worker = {
   @module("node:worker_threads") @new
   external make: (~file: string, ~options: options<'a, 'env>=?, unit) => t<'a> = "Worker"
   @send
-  external onError: (t<'a>, @as("error") _, @uncurry (Js.Exn.t => unit)) => t<'a> = "on"
+  external onError: (t<'a>, @as("error") _, @uncurry (JsExn.t => unit)) => t<'a> = "on"
   @send
   external onMessage: (t<'a>, @as("message") _, @uncurry ('a => unit)) => t<'a> = "on"
   @send
@@ -129,7 +129,7 @@ module Worker = {
     @module("node:worker_threads") @new
     external make: (~file: string, ~options: options<'env>=?, unit) => t = "Worker"
     @send
-    external onError: (t, @as("error") _, @uncurry (Js.Exn.t => unit)) => t = "on"
+    external onError: (t, @as("error") _, @uncurry (JsExn.t => unit)) => t = "on"
     @send
     external onMessage: (t, @as("message") _, @uncurry (T.message => unit)) => t = "on"
     @send

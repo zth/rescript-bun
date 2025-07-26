@@ -316,7 +316,7 @@ type underlyingSource<'r> = {
 module ReadableStreamDirectController = {
   type t
 
-  @send external close: (t, ~error: Error.t=?) => unit = "close"
+  @send external close: (t, ~error: JsError.t=?) => unit = "close"
   @send external writeBufferSource: (t, BufferSource.t) => float = "write"
   @send external writeBufferSourceAsync: (t, BufferSource.t) => promise<float> = "write"
 

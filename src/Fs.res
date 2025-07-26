@@ -13,12 +13,12 @@ module Dir = {
   type t = {path: string}
   @send external close: t => Js.Promise.t<unit> = "close"
   @send
-  external closeWithCallback: (t, Js.nullable<Js.Exn.t> => unit) => unit = "close"
+  external closeWithCallback: (t, Js.nullable<JsExn.t> => unit) => unit = "close"
   @send external closeSync: t => unit = "closeSync"
   @send
   external read: t => Js.Promise.t<Js.nullable<Dirent.t>> = "read"
   @send
-  external readWithCallback: (t, (Js.Exn.t, Js.nullable<Dirent.t>) => unit) => unit = "read"
+  external readWithCallback: (t, (JsExn.t, Js.nullable<Dirent.t>) => unit) => unit = "read"
   @send external readSync: t => Js.nullable<Dirent.t> = "readSync"
 }
 

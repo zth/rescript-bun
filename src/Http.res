@@ -145,7 +145,7 @@ module IncomingMessage = {
     @get external complete: subtype<'r, 'a> => bool = "complete"
     @send external destroy: subtype<'r, 'a> => unit = "destroy"
     @send
-    external destroyWithError: (subtype<'r, 'a>, Js.Exn.t) => bool = "destroy"
+    external destroyWithError: (subtype<'r, 'a>, JsExn.t) => bool = "destroy"
     @send
     external setTimeout: (subtype<'r, 'a>, int) => subtype<'r, 'a> = "setTimeout"
     @send
@@ -530,7 +530,7 @@ module Server = {
     external onClientError: (
       subtype<'a>,
       @as("clientError") _,
-      @uncurry (Js.Exn.t, Net.TcpSocket.t) => unit,
+      @uncurry (JsExn.t, Net.TcpSocket.t) => unit,
     ) => subtype<'a> = "on"
     @send
     external onConnect: (
@@ -572,7 +572,7 @@ module Server = {
     external offClientError: (
       subtype<'a>,
       @as("clientError") _,
-      @uncurry (Js.Exn.t, Net.TcpSocket.t) => unit,
+      @uncurry (JsExn.t, Net.TcpSocket.t) => unit,
     ) => subtype<'a> = "off"
     @send
     external offConnect: (
@@ -614,7 +614,7 @@ module Server = {
     external onClientErrorOnce: (
       subtype<'a>,
       @as("clientError") _,
-      @uncurry (Js.Exn.t, Net.TcpSocket.t) => unit,
+      @uncurry (JsExn.t, Net.TcpSocket.t) => unit,
     ) => subtype<'a> = "once"
     @send
     external onConnectOnce: (
@@ -687,7 +687,7 @@ type requestOptions = {
   host?: string,
   hostName?: string,
   localAddress?: string,
-  lookup?: (string, Dns.options, (Js.Exn.t, string, int) => unit) => string,
+  lookup?: (string, Dns.options, (JsExn.t, string, int) => unit) => string,
   maxHeaderSize?: int,
   method?: string,
   path?: string,

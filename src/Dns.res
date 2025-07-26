@@ -77,40 +77,40 @@ external setServers: array<string> => Js.Promise.t<unit> = "setServers"
 
 module CallbackAPI = {
   @module("node:dns")
-  external lookup: (string, (Js.Exn.t, string, int) => unit) => string = "lookup"
+  external lookup: (string, (JsExn.t, string, int) => unit) => string = "lookup"
   @module("node:dns")
-  external lookupWithOptions: (string, options, (Js.Exn.t, string, int) => unit) => string =
+  external lookupWithOptions: (string, options, (JsExn.t, string, int) => unit) => string =
     "lookup"
   @module("node:dns")
   external getServers: unit => array<string> = "getServers"
   @module("node:dns")
-  external resolveAny: (string, (Js.Exn.t, array<{..}>) => unit) => unit = "resolveAny"
+  external resolveAny: (string, (JsExn.t, array<{..}>) => unit) => unit = "resolveAny"
   @module("node:dns")
-  external resolve4: (string, (Js.Exn.t, array<string>) => unit) => unit = "resolve4"
+  external resolve4: (string, (JsExn.t, array<string>) => unit) => unit = "resolve4"
   @module("node:dns")
   external resolve4TTL: (
     string,
     @as(json` {"ttl": true} `) _,
-    (Js.Exn.t, array<{"address": string, "ttl": int}>) => unit,
+    (JsExn.t, array<{"address": string, "ttl": int}>) => unit,
   ) => unit = "resolve4"
   @module("node:dns")
-  external resolve6: (string, (Js.Exn.t, array<string>) => unit) => unit = "resolve6"
+  external resolve6: (string, (JsExn.t, array<string>) => unit) => unit = "resolve6"
   @module("node:dns")
   external resolve6TTL: (
     string,
     @as(json` {"ttl": true} `) _,
-    (Js.Exn.t, array<{"address": string, "ttl": int}>) => unit,
+    (JsExn.t, array<{"address": string, "ttl": int}>) => unit,
   ) => unit = "resolve6"
   @module("node:dns")
-  external resolveCname: (string, (Js.Exn.t, array<string>) => unit) => unit = "resolveCname"
+  external resolveCname: (string, (JsExn.t, array<string>) => unit) => unit = "resolveCname"
   @module("node:dns")
-  external resolveMx: (string, (Js.Exn.t, array<{"exchange": string, "priority": int}>)) => unit =
+  external resolveMx: (string, (JsExn.t, array<{"exchange": string, "priority": int}>)) => unit =
     "resolveMx"
   @module("node:dns")
   external resolveNaptr: (
     string,
     (
-      Js.Exn.t,
+      JsExn.t,
       array<{
         "flags": string,
         "service": string,
@@ -122,14 +122,14 @@ module CallbackAPI = {
     ) => unit,
   ) => unit = "resolveNaptr"
   @module("node:dns")
-  external resolveNs: (string, (Js.Exn.t, array<string>)) => unit = "resolveNs"
+  external resolveNs: (string, (JsExn.t, array<string>)) => unit = "resolveNs"
   @module("node:dns")
-  external resolvePtr: (string, (Js.Exn.t, array<string>)) => unit = "resolvePtr"
+  external resolvePtr: (string, (JsExn.t, array<string>)) => unit = "resolvePtr"
   @module("node:dns")
   external resolveSoa: (
     string,
     (
-      Js.Exn.t,
+      JsExn.t,
       {
         "nsname": string,
         "hostmaster": string,
@@ -144,12 +144,12 @@ module CallbackAPI = {
   @module("node:dns")
   external resolveSrv: (
     string,
-    (Js.Exn.t, array<{"priority": int, "weight": int, "port": int, "name": string}>) => unit,
+    (JsExn.t, array<{"priority": int, "weight": int, "port": int, "name": string}>) => unit,
   ) => unit = "resolveSrv"
   @module("node:dns")
-  external resolveTxt: (string, (Js.Exn.t, array<array<string>>)) => unit = "resolveTxt"
+  external resolveTxt: (string, (JsExn.t, array<array<string>>)) => unit = "resolveTxt"
   @module("node:dns")
-  external reverse: (string, (Js.Exn.t, array<string>) => unit) => unit = "reverse"
+  external reverse: (string, (JsExn.t, array<string>) => unit) => unit = "reverse"
   @module("node:dns")
   external setServers: array<string> => unit = "setServers"
 }
