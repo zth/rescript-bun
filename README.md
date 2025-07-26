@@ -2,6 +2,14 @@
 
 _Check out the `2.x` branch for ReScript v12 support._
 
+## Release Branches
+
+This repository maintains two active release branches:
+- **`main` branch**: For 1.x releases (ReScript v11+ support)
+- **`2.x` branch**: For 2.x releases (ReScript v12+ support)
+
+Each branch has independent release cycles managed by changesets. See [DUAL_BRANCH_SETUP.md](DUAL_BRANCH_SETUP.md) for detailed information about the dual-branch setup.
+
 Use [Bun](https://bun.sh) with ReScript.
 
 > **Currently alpha state software**. You're encouraged to start using it, but please report all issues. There will be both bindings missing and some bindings will probably be wrong/suboptimal. We're going to work through the API surface as we go. Report all issues you find!
