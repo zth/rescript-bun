@@ -5,7 +5,7 @@ import * as Buntest from "bun:test";
 
 Buntest.describe("shell", () => {
   Buntest.test("basic commands work", async () => {
-    let res = await $$Bun.$`echo HELLO`;
+    let res = await $$Bun.$`echo \"HELLO\"`;
     Buntest.expect(res.stdout.toString()).toBe("HELLO\n");
   });
 });
