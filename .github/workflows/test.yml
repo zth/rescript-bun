@@ -1,10 +1,13 @@
+# Test workflow for both main (1.x) and 2.x branches
+# This workflow runs tests on both the main branch (1.x development) 
+# and the 2.x branch (2.x development) to ensure code quality across both version lines.
 name: Test
 
 on:
   push:
-    branches: [main]
+    branches: [main, 2.x]
   pull_request:
-    branches: [main]
+    branches: [main, 2.x]
 
 jobs:
   build:
