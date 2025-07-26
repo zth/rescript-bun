@@ -1,5 +1,11 @@
 # main
 
+## 2.0.1
+
+### Patch Changes
+
+- b5304a1: Fix deprecations from latest ReScript v12 beta
+
 ## 2.0.0
 
 ### Patch Changes
