@@ -1,5 +1,11 @@
 # main
 
+## 2.0.0
+
+### Patch Changes
+
+- 1088e3f: Merge latest work from 1.x.
+
 A note about versions:
 
 - `2.x.x` is for ReScript v12 and above.
