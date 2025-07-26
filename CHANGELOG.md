@@ -5,6 +5,12 @@ A note about versions:
 - `2.x.x` is for ReScript v12 and above.
 - `0.x.x` is for ReScript v11 and below.
 
+# 2.0.0-alpha.2
+
+`rescript-bun` is now compatible with ReScript v12 beta 3.
+
+- Include changes of 0.6
+
 # 2.0.0-alpha.1
 
 `rescript-bun` is now compatible with ReScript v12.
