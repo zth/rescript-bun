@@ -1,6 +1,6 @@
 {
   "name": "rescript-bun",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0",
   "main": "src/Bun.js",
   "sideEffects": false,
   "description": "Use Bun with ReScript.",
