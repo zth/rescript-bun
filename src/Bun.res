@@ -464,7 +464,7 @@ module BunRequest = {
   @get
   external params: t => Dict.t<string> = "params"
   @get
-  external cookies: t => Iterator.t<(string, string)> = "cookies"
+  external cookies: t => CookieMap.t = "cookies"
 }
 
 @unboxed
