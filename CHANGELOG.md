@@ -1,5 +1,11 @@
 # main
 
+## 2.0.2
+
+### Patch Changes
+
+- c7312ed: Improve Sqlite bindings
+
 ## 2.0.1
 
 ### Patch Changes
