@@ -1,8 +1,13 @@
 @unboxed
 type expires = 
-| Number(int)
+| MsSinceEpoch(Date.msSinceEpoch)
 | Date(Date.t)
-| String(string)
+| ISOString(string)
+
+type sameSite =
+| @as("strict") Strict
+| @as("lax") Lax
+| @as("none") None
 
 type cookieInit = {
   name?: string,
@@ -11,7 +16,7 @@ type cookieInit = {
   path?: string,
   expires?: expires,
   secure?: bool,
-  sameSite?: [#strict | #lax | #none],
+  sameSite?: sameSite,
   httpOnly?: bool,
   partitioned?: bool,
   maxAge?: int,
