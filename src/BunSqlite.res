@@ -3,11 +3,11 @@ module Statement = {
 
   /** Runs a query and returns an array of JSON objects for the results. */
   @send
-  external all: (t, {..}) => array<JSON.t> = "all"
+  external all: (t, ~params: {..}=?) => array<JSON.t> = "all"
 
   /** Runs a query and returns raw JSON for the results. */
   @send
-  external allJson: (t, {..}) => JSON.t = "all"
+  external allJson: (t, ~params: {..}=?) => JSON.t = "all"
 
   /** Runs a query and returns raw JSON, using a dictionary for the parameters to make it easy to assemble parameters dynamically. */
   @send
@@ -15,19 +15,21 @@ module Statement = {
 
   /** Runs a query and returns a JSON object for the results. */
   @send
-  external get: (t, {..}) => Nullable.t<JSON.t> = "get"
+  external get: (t, ~params: {..}=?) => Nullable.t<JSON.t> = "get"
 
   /** Runs a query and returns a JSON object for the results, using a dictionary for the parameters to make it easy to assemble parameters dynamically. */
   @send
   external getDict: (t, Dict.t<JSON.t>) => Nullable.t<JSON.t> = "get"
 
+  type runResult = {lastInsertRowid: int, changes: int}
+
   /** Runs a query, expecting no results. */
   @send
-  external run: (t, {..}) => unit = "run"
+  external run: (t, ~params: {..}=?) => runResult = "run"
 
   /** Runs a query and returns an iterator over the results as raw JSON. */
   @send
-  external iterate: (t, {..}) => Iterator.t<JSON.t> = "iterate"
+  external iterate: (t, ~params: {..}=?) => Iterator.t<JSON.t> = "iterate"
 
   /** Destroys the statement, freeing up resources. */
   @send
@@ -44,8 +46,7 @@ module Database = {
   type dbOptions = {readonly?: bool, create?: bool, strict?: bool}
 
   /** Creates a new database. */
-  @module("bun:sqlite")
-  @new
+  @module("bun:sqlite") @new
   external make: (string, ~options: dbOptions=?) => t = "Database"
 
   /**
@@ -57,8 +58,7 @@ module Database = {
    let db = Database.makeInMemory()
    ```
    */
-  @module("bun:sqlite")
-  @new
+  @module("bun:sqlite") @new
   external makeInMemory: (@as(":memory:") _, ~options: dbOptions=?) => t = "Database"
 
   /**
