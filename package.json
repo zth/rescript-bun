@@ -9,7 +9,10 @@
     "pretest": "rescript build --dev",
     "test": "bun test test/*.test.js",
     "changeset": "changeset",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "release:next": "changeset publish --tag next",
+    "version:snapshot": "changeset version --snapshot next",
+    "release:snapshot": "changeset publish --tag next"
   },
   "files": [
     "rescript.json",

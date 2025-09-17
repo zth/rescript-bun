@@ -1,0 +1,57 @@
+# Release workflow for development branches (next tag)
+# This workflow handles releases for development branches that should be published under @next tag.
+name: Release (@next)
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  push:
+    branches:
+      - 'copilot/**'
+      - 'feature/**'
+      - 'dev/**'
+      - 'next/**'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'NPM tag to publish under'
+        required: false
+        default: 'next'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: bun run build
+
+      # Create snapshot version for development branches
+      - name: Create snapshot version
+        run: npm run version:snapshot
+
+      # Publish to @next tag for development branches
+      - name: Publish to npm (@next tag)
+        run: npm run release:snapshot
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
