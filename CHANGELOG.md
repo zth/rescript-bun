@@ -1,5 +1,11 @@
 # main
 
+## 0.6.1
+
+### Patch Changes
+
+- 49bf132: Cookie API bindings
+
 ## 0.6.0
 
 ### Minor Changes
