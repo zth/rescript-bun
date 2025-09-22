@@ -2850,6 +2850,3 @@ module Glob = {
   @send
   external match: (t, string) => bool = "match"
 }
-
-@module("bun") @variadic
-external sql: (array<string>, array<SQL.param>) => SQL.SQLQuery.t<SQL.param> = "sql"

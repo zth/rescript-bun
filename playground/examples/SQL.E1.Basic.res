@@ -1,10 +1,4 @@
-// PostgreSQL (default)
-let users = await Bun.sql`
-  SELECT * FROM users
-  WHERE active = ${Boolean(true)}
-  LIMIT ${Number(10.0)}
-`
-
+// With PostgreSQL
 let mysql = SQL.make("mysql://user:pass@localhost:3306/mydb")
 let mysqlResults = await mysql->SQL.query`
   SELECT * FROM users 
