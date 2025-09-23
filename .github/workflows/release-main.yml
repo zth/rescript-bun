@@ -36,13 +36,6 @@ jobs:
       - name: Build project
         run: bun run build
 
-      - name: Verify npm auth
-        run: |
-          npm config get registry
-          npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
