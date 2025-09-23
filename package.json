@@ -10,6 +10,10 @@
     "changeset": "changeset",
     "release": "changeset publish"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "files": [
     "rescript.json",
     "README.md",

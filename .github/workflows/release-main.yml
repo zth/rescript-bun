@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
+          always-auth: true
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -38,12 +39,20 @@ jobs:
       - name: Build project
         run: bun run build
 
+      - name: Verify npm auth
+        run: |
+          npm config get registry
+          npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       # This workflow is specifically for 1.x releases on the main branch
       # The changeset action will handle version bumps according to changeset config
       - name: Create Release Pull Request or Publish to npm (1.x releases)
         uses: changesets/action@v1
         with:
-          publish: bun run release
+          publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
