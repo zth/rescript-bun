@@ -1,5 +1,11 @@
 # main
 
+## 0.6.2
+
+### Patch Changes
+
+- 30f25fb: SQL API Bindings
+
 ## 0.6.1
 
 ### Patch Changes
