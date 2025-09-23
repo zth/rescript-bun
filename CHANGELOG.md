@@ -1,5 +1,11 @@
 # main
 
+## 2.0.1
+
+### Patch Changes
+
+- e9087b7: Move to ReScript v12.
+
 ## 0.6.2
 
 ### Patch Changes
