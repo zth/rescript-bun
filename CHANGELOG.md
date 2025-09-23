@@ -1,5 +1,11 @@
 # main
 
+## 2.0.2
+
+### Patch Changes
+
+- f118bba: ReScript v12.
+
 ## 2.0.1
 
 ### Patch Changes
