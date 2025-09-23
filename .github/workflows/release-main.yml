@@ -1,7 +1,4 @@
-# Release workflow for the main branch (1.x versions)
-# This workflow handles releases for the 1.x version line of rescript-bun.
-# It only triggers on pushes to the main branch to ensure 1.x releases are properly managed.
-name: Release (1.x)
+name: Release
 
 permissions:
   contents: write
@@ -46,9 +43,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # This workflow is specifically for 1.x releases on the main branch
-      # The changeset action will handle version bumps according to changeset config
-      - name: Create Release Pull Request or Publish to npm (1.x releases)
+      - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
           publish: npm run release
