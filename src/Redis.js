@@ -2,12 +2,12 @@
 
 import * as $$Bun from "bun";
 
-var RedisClient = {};
+let RedisClient = {};
 
-var redis = new $$Bun.RedisClient();
+let redis = new $$Bun.RedisClient();
 
 export {
-  RedisClient ,
-  redis ,
+  RedisClient,
+  redis,
 }
 /* redis Not a pure module */

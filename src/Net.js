@@ -2,68 +2,68 @@
 
 import * as EventEmitter$RescriptBun from "./EventEmitter.js";
 
-var Events = {};
+let Events = {};
 
-var Impl = {};
+let Impl = {};
 
 EventEmitter$RescriptBun.Impl({});
 
-var Socket = {
+let Socket = {
   Events: Events,
   Impl: Impl
 };
 
-var Events$1 = {};
+let Events$1 = {};
 
-var Impl$1 = {};
+let Impl$1 = {};
 
-var TcpSocket = {
+let TcpSocket = {
   Events: Events$1,
   Impl: Impl$1
 };
 
-var Events$2 = {};
+let Events$2 = {};
 
-var Impl$2 = {};
+let Impl$2 = {};
 
-var IcpSocket = {
+let IcpSocket = {
   Events: Events$2,
   Impl: Impl$2
 };
 
-var Events$3 = {};
+let Events$3 = {};
 
-var Impl$3 = {};
+let Impl$3 = {};
 
-var Server = {
+let Server = {
   Events: Events$3,
   Impl: Impl$3
 };
 
-var Events$4 = {};
+let Events$4 = {};
 
-var Impl$4 = {};
+let Impl$4 = {};
 
-var TcpServer = {
+let TcpServer = {
   Events: Events$4,
   Impl: Impl$4
 };
 
-var Events$5 = {};
+let Events$5 = {};
 
-var Impl$5 = {};
+let Impl$5 = {};
 
-var IcpServer = {
+let IcpServer = {
   Events: Events$5,
   Impl: Impl$5
 };
 
 export {
-  Socket ,
-  TcpSocket ,
-  IcpSocket ,
-  Server ,
-  TcpServer ,
-  IcpServer ,
+  Socket,
+  TcpSocket,
+  IcpSocket,
+  Server,
+  TcpServer,
+  IcpServer,
 }
 /*  Not a pure module */

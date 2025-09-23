@@ -2,49 +2,49 @@
 
 import * as Net$RescriptBun from "./Net.js";
 
-var Events = {};
+let Events = {};
 
-var Impl = {};
+let Impl = {};
 
-var IncomingMessage = {
+let IncomingMessage = {
   Events: Events,
   Impl: Impl
 };
 
-var Events$1 = {};
+let Events$1 = {};
 
-var Impl$1 = {};
+let Impl$1 = {};
 
-var ClientRequest = {
+let ClientRequest = {
   Events: Events$1,
   Impl: Impl$1
 };
 
-var Events$2 = {};
+let Events$2 = {};
 
-var Impl$2 = {};
+let Impl$2 = {};
 
-var ServerResponse = {
+let ServerResponse = {
   Events: Events$2,
   Impl: Impl$2
 };
 
-var Agent = {};
+let Agent = {};
 
-var Events$3 = {};
+let Events$3 = {};
 
-var Impl$3 = {};
+let Impl$3 = {};
 
-var Server = {
+let Server = {
   Events: Events$3,
   Impl: Impl$3
 };
 
 export {
-  IncomingMessage ,
-  ClientRequest ,
-  ServerResponse ,
-  Agent ,
-  Server ,
+  IncomingMessage,
+  ClientRequest,
+  ServerResponse,
+  Agent,
+  Server,
 }
 /* Net-RescriptBun Not a pure module */

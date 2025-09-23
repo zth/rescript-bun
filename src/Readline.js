@@ -4,7 +4,7 @@ import * as EventEmitter$RescriptBun from "./EventEmitter.js";
 
 EventEmitter$RescriptBun.Impl({});
 
-var Interface = {};
+let Interface = {};
 
 function close(rl, f) {
   return rl.on("close", f);
@@ -18,14 +18,14 @@ function history(rl, f) {
   return rl.on("history", f);
 }
 
-var Events = {
+let Events = {
   close: close,
   line: line,
   history: history
 };
 
 export {
-  Interface ,
-  Events ,
+  Interface,
+  Events,
 }
 /*  Not a pure module */

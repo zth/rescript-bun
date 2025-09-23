@@ -3,31 +3,30 @@
 import * as $$Bun from "bun";
 import * as SQL$RescriptBun from "rescript-bun/src/SQL.js";
 
-var users = await $$Bun.sql([
-      "\n  SELECT * FROM users\n  WHERE active = ",
-      "\n  LIMIT ",
-      "\n"
-    ], true, 10.0);
+let mysql = new $$Bun.SQL("mysql://user:pass@localhost:3306/mydb");
 
-var mysql = new $$Bun.SQL("mysql://user:pass@localhost:3306/mydb");
+let mysqlResults = await SQL$RescriptBun.query(mysql, [
+  `
+  SELECT * FROM users 
+  WHERE active = `,
+  `
+`
+], [true]);
 
-var mysqlResults = await SQL$RescriptBun.query(mysql, [
-      "\n  SELECT * FROM users \n  WHERE active = ",
-      "\n"
-    ], [true]);
+let sqlite = new $$Bun.SQL("sqlite://myapp.db");
 
-var sqlite = new $$Bun.SQL("sqlite://myapp.db");
-
-var sqliteResults = await SQL$RescriptBun.query(sqlite, [
-      "\n  SELECT * FROM users \n  WHERE active = ",
-      "\n"
-    ], [1.0]);
+let sqliteResults = await SQL$RescriptBun.query(sqlite, [
+  `
+  SELECT * FROM users 
+  WHERE active = `,
+  `
+`
+], [1.0]);
 
 export {
-  users ,
-  mysql ,
-  mysqlResults ,
-  sqlite ,
-  sqliteResults ,
+  mysql,
+  mysqlResults,
+  sqlite,
+  sqliteResults,
 }
-/* users Not a pure module */
+/* mysql Not a pure module */

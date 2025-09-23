@@ -3,7 +3,4 @@
 
 console.log(Bun.fileURLToPath("file:///path/to/file.txt"));
 
-export {
-  
-}
 /*  Not a pure module */

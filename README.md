@@ -1,36 +1,24 @@
 # rescript-bun
 
-_Check out the `2.x` branch for ReScript v12 support._
-
-## Release Branches
-
-This repository maintains two active release branches:
-- **`main` branch**: For 1.x releases (ReScript v11+ support)
-- **`2.x` branch**: For 2.x releases (ReScript v12+ support)
-
-Each branch has independent release cycles managed by changesets. See [DUAL_BRANCH_SETUP.md](DUAL_BRANCH_SETUP.md) for detailed information about the dual-branch setup.
-
 Use [Bun](https://bun.sh) with ReScript.
-
-> **Currently alpha state software**. You're encouraged to start using it, but please report all issues. There will be both bindings missing and some bindings will probably be wrong/suboptimal. We're going to work through the API surface as we go. Report all issues you find!
 
 ## Getting started
 
 **Template repo to get up and running quickly: https://github.com/zth/rescript-bun-starter**
 
-You need to be on ReScript v11 `>=11.1.0` and Core `>=1.3.0`. This is designed for uncurried mode so you should use that as well (`"uncurried": true` in your bsconfig/`rescript.json`).
+You need to be on ReScript v12 `>=12.0.0-alpha.4`.
 
-Install `rescript-bun` and `@rescript/core`:
+Install `rescript-bun`:
 
 ```bash
-npm i rescript-bun @rescript/core
+npm i rescript-bun@2
 ```
 
 Include them in your `rescript.json`:
 
 ```json
 {
-  "bs-dependencies": ["@rescript/core", "rescript-bun"]
+  "dependencies": ["rescript-bun"]
 }
 ```
 
@@ -40,11 +28,7 @@ Include them in your `rescript.json`:
 
 ```json
 {
-  "bsc-flags": [
-    "-open RescriptCore",
-    "-open RescriptBun",
-    "-open RescriptBun.Globals"
-  ]
+  "bsc-flags": ["-open RescriptBun", "-open RescriptBun.Globals"]
 }
 ```
 
@@ -218,7 +202,7 @@ Currently, bindings exist for the most common things. There's still a good amoun
 
 ## Other things to figure out
 
-- How to reuse/contribute to [`rescript-webapi`](https://github.com/TheSpyder/rescript-webapi) instead of rolling our own bindings. I've intentionally not reused any other existing library because I wanted to start from scratch and follow ReScript v11 idioms as much as possible. But once all of this settles, we need to figure out and share the common denominator with `rescript-webapi` and other similar projects to this.
+- How to reuse/contribute to [`rescript-webapi`](https://github.com/TheSpyder/rescript-webapi) instead of rolling our own bindings. I've intentionally not reused any other existing library because I wanted to start from scratch and follow ReScript v11+ idioms as much as possible. But once all of this settles, we need to figure out and share the common denominator with `rescript-webapi` and other similar projects to this.
 
 ## Contributing
 
@@ -229,7 +213,6 @@ If you do want to contribute, _please open an issue saying you're starting work 
 ## Versioning and releasing
 
 This project uses [Changesets](https://github.com/changesets/changesets) to manage versions and changelogs. Run `npm run changeset` to create a changeset describing your changes. When changes are merged to `main`, a GitHub Action opens a release PR and merging that will publish a new version.
-
 
 ## Bindings style
 

@@ -53,78 +53,78 @@ function dataView(x) {
 function classify(x) {
   if (typeof x === "string") {
     return {
-            TAG: "String",
-            _0: x
-          };
+      TAG: "String",
+      _0: x
+    };
   } else if (Buffer.isBuffer(x)) {
     return {
-            TAG: "Buffer",
-            _0: x
-          };
+      TAG: "Buffer",
+      _0: x
+    };
   } else if (Nodeutil.types.isInt8Array(x)) {
     return {
-            TAG: "Int8Array",
-            _0: x
-          };
+      TAG: "Int8Array",
+      _0: x
+    };
   } else if (Nodeutil.types.isUint8Array(x)) {
     return {
-            TAG: "Uint8Array",
-            _0: x
-          };
+      TAG: "Uint8Array",
+      _0: x
+    };
   } else if (Nodeutil.types.isUint8ClampedArray(x)) {
     return {
-            TAG: "Uint8ClampedArray",
-            _0: x
-          };
+      TAG: "Uint8ClampedArray",
+      _0: x
+    };
   } else if (Nodeutil.types.isInt16Array(x)) {
     return {
-            TAG: "Int16Array",
-            _0: x
-          };
+      TAG: "Int16Array",
+      _0: x
+    };
   } else if (Nodeutil.types.isUint16Array(x)) {
     return {
-            TAG: "Uint16Array",
-            _0: x
-          };
+      TAG: "Uint16Array",
+      _0: x
+    };
   } else if (Nodeutil.types.isInt32Array(x)) {
     return {
-            TAG: "Int32Array",
-            _0: x
-          };
+      TAG: "Int32Array",
+      _0: x
+    };
   } else if (Nodeutil.types.isUint32Array(x)) {
     return {
-            TAG: "Uint32Array",
-            _0: x
-          };
+      TAG: "Uint32Array",
+      _0: x
+    };
   } else if (Nodeutil.types.isFloat32Array(x)) {
     return {
-            TAG: "Float32Array",
-            _0: x
-          };
+      TAG: "Float32Array",
+      _0: x
+    };
   } else if (Nodeutil.types.isFloat64Array(x)) {
     return {
-            TAG: "Float64Array",
-            _0: x
-          };
+      TAG: "Float64Array",
+      _0: x
+    };
   } else if (Nodeutil.types.isDataView(x)) {
     return {
-            TAG: "DataView",
-            _0: x
-          };
+      TAG: "DataView",
+      _0: x
+    };
   } else if (Nodeutil.types.isStringObject(x)) {
     return {
-            TAG: "String",
-            _0: x
-          };
+      TAG: "String",
+      _0: x
+    };
   } else {
     return {
-            TAG: "Unknown",
-            _0: x
-          };
+      TAG: "Unknown",
+      _0: x
+    };
   }
 }
 
-var Impl = {
+let Impl = {
   string: string,
   buffer: buffer,
   int8Array: int8Array,
@@ -141,19 +141,19 @@ var Impl = {
 };
 
 export {
-  Impl ,
-  string ,
-  buffer ,
-  int8Array ,
-  uInt8Array ,
-  uInt8ClampedArray ,
-  uInt16Array ,
-  int16Array ,
-  uInt32Array ,
-  int32Array ,
-  float32Array ,
-  float64Array ,
-  dataView ,
-  classify ,
+  Impl,
+  string,
+  buffer,
+  int8Array,
+  uInt8Array,
+  uInt8ClampedArray,
+  uInt16Array,
+  int16Array,
+  uInt32Array,
+  int32Array,
+  float32Array,
+  float64Array,
+  dataView,
+  classify,
 }
 /* node:util Not a pure module */

@@ -5,7 +5,7 @@ function WithMessageType(T) {
   return {};
 }
 
-var $$MessagePort = {
+let MessagePort = {
   WithMessageType: WithMessageType
 };
 
@@ -13,7 +13,7 @@ function WithMessageTypes(T) {
   return {};
 }
 
-var $$MessageChannel = {
+let MessageChannel = {
   WithMessageTypes: WithMessageTypes
 };
 
@@ -21,21 +21,21 @@ function WithMessageType$1(T) {
   return {};
 }
 
-var $$Worker = {
+let Worker = {
   WithMessageType: WithMessageType$1
 };
 
 function WithMessageType$2(T) {
-  var $$Worker = {};
+  let Worker = {};
   return {
-          $$Worker: $$Worker
-        };
+    Worker: Worker
+  };
 }
 
 export {
-  $$MessagePort ,
-  $$MessageChannel ,
-  $$Worker ,
+  MessagePort,
+  MessageChannel,
+  Worker,
   WithMessageType$2 as WithMessageType,
 }
 /* No side effect */

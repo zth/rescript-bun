@@ -1,6 +1,6 @@
 {
   "name": "rescript-bun",
-  "version": "0.6.2",
+  "version": "2.0.0",
   "main": "src/Bun.js",
   "sideEffects": false,
   "description": "Use Bun with ReScript.",
@@ -27,11 +27,9 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.29.5",
-    "@rescript/core": "^1.6.1",
-    "rescript": "^11.1.4"
+    "rescript": "12.0.0-beta.11"
   },
   "peerDependencies": {
-    "@rescript/core": ">=1.3.0",
-    "rescript": ">=11.1.0"
+    "rescript": ">= 12.0.0-alpha.4"
   }
 }
