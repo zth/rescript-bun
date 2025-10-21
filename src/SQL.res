@@ -51,7 +51,7 @@ let object: (t, {..}, array<string>) => SQLQuery.t<param> = %raw(`
 
 let values: (t, array<'a>) => SQLQuery.t<param> = %raw(`
   function(t, values) {
-    return t(arr)
+    return t(values)
   }
 `)
 
