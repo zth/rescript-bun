@@ -1,5 +1,11 @@
 # main
 
+## 2.0.3
+
+### Patch Changes
+
+- de56ce5: Fix typo in SQL `values` raw JS function
+
 ## 2.0.2
 
 ### Patch Changes
