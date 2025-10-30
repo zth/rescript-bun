@@ -145,8 +145,7 @@ module Server = {
      * }
      * ```
      */
-  @return(nullable)
-  @send
+  @return(nullable) @send
   external requestIP: (t, Request.t) => option<socketAddress> = "requestIP"
 
   /**
@@ -478,7 +477,7 @@ type routeHandlerObject = {
   @as("OPTIONS") options?: routeHandlerForMethod,
   @as("PATCH") patch?: routeHandlerForMethod,
   @as("POST") post?: routeHandlerForMethod,
-  @as("PUT") put?: routeHandlerForMethod
+  @as("PUT") put?: routeHandlerForMethod,
 }
 
 type serveOptions = {
@@ -515,7 +514,6 @@ type serveOptions = {
    *
    */
   fetch: (Request.t, Server.t) => promise<Response.t>,
-
   /*
    * Handle HTTP requests with a router
    */
@@ -1254,8 +1252,7 @@ module Hash = {
       external hashString: (string, ~seed: bigint=?) => bigint = "Bun.hash.cityHash64"
       external hashArrayBufferView: (ArrayBufferView.t, ~seed: bigint=?) => bigint =
         "Bun.hash.cityHash64"
-      external hashArrayBuffer: (ArrayBuffer.t, ~seed: bigint=?) => bigint =
-        "Bun.hash.cityHash64"
+      external hashArrayBuffer: (ArrayBuffer.t, ~seed: bigint=?) => bigint = "Bun.hash.cityHash64"
       external hashSharedArrayBuffer: (SharedArrayBuffer.t, ~seed: bigint=?) => bigint =
         "Bun.hash.cityHash64"
     }
@@ -1282,8 +1279,7 @@ module Hash = {
       external hashString: (string, ~seed: bigint=?) => bigint = "Bun.hash.murmur64v2"
       external hashArrayBufferView: (ArrayBufferView.t, ~seed: bigint=?) => bigint =
         "Bun.hash.murmur64v2"
-      external hashArrayBuffer: (ArrayBuffer.t, ~seed: bigint=?) => bigint =
-        "Bun.hash.murmur64v2"
+      external hashArrayBuffer: (ArrayBuffer.t, ~seed: bigint=?) => bigint = "Bun.hash.murmur64v2"
       external hashSharedArrayBuffer: (SharedArrayBuffer.t, ~seed: bigint=?) => bigint =
         "Bun.hash.murmur64v2"
     }
@@ -1298,7 +1294,12 @@ type javaScriptLoader = | @as("jsx") Jsx | @as("js") Js | @as("ts") Ts | @as("ts
    * This also powers expect().toEqual in `bun:test`
    *
    */
-external deepEquals: ('a, 'b, /** @default false */ ~strict: bool=?) => bool = "Bun.deepEquals"
+external deepEquals: (
+  'a,
+  'b,
+  /** @default false */
+  ~strict: bool=?,
+) => bool = "Bun.deepEquals"
 
 /**
    * Returns true if all properties in the subset exist in the
@@ -1327,7 +1328,7 @@ type loader =
   | @as("text") Text
 
 type target =
-  | /**
+  /**
      * For generating bundles that are intended to be run by the Bun runtime. In many cases,
      * it isn't necessary to bundle server-side code; you can directly execute the source code
      * without modification. However, bundling your server code can reduce startup times and
@@ -1336,18 +1337,15 @@ type target =
      * All bundles generated with `target: "bun"` are marked with a special `// @bun` pragma, which
      * indicates to the Bun runtime that there's no need to re-transpile the file before execution.
      */
-  @as("bun")
-  Bun
-  | /**
+  | @as("bun") Bun
+  /**
      * The plugin will be applied to Node.js builds
      */
-  @as("node")
-  Node
-  | /**
+  | @as("node") Node
+  /**
      * The plugin will be applied to browser builds
      */
-  @as("browser")
-  Browser
+  | @as("browser") Browser
 
 module Transpiler = {
   type t
@@ -1894,8 +1892,7 @@ module Password = {
      * The password to verify.
      *
      * If empty, always returns false
-     */
-    Buffer.t,
+     */ Buffer.t,
     /**
      * Previously hashed password.
      * If empty, always returns false
@@ -1936,8 +1933,7 @@ module Password = {
      *
      * If empty, this function throws an error. It is usually a programming
      * mistake to hash an empty password.
-     */
-    string,
+     */ string,
     /**
      * @default "argon2id"
      *
@@ -1972,8 +1968,7 @@ module Password = {
      *
      * If empty, this function throws an error. It is usually a programming
      * mistake to hash an empty password.
-     */
-    Buffer.t,
+     */ Buffer.t,
     /**
      * @default "argon2id"
      *
@@ -2096,8 +2091,7 @@ module Password = {
      *
      * If empty, this function throws an error. It is usually a programming
      * mistake to hash an empty password.
-     */
-    string,
+     */ string,
     /**
      * @default "argon2id"
      *
@@ -2142,8 +2136,7 @@ module Password = {
      *
      * If empty, this function throws an error. It is usually a programming
      * mistake to hash an empty password.
-     */
-    Buffer.t,
+     */ Buffer.t,
     /**
      * @default "argon2id"
      *
@@ -2389,6 +2382,119 @@ module CryptoHasher = {
      * These are hardware accelerated with BoringSSL
      */
   external algorithms: array<supportedCryptoAlgorithms> = "Bun.CryptoHasher.algorithms"
+}
+
+/**
+  * Generate and verify CSRF/XSRF tokens
+  *
+  * This binds to Bun 1.3's `Bun.CSRF` API, allowing you to generate and verify
+  * CSRF tokens, optionally configuring encoding, expiry, and algorithm.
+  *
+  * Example
+  * ```rescript
+  * let secret = "my-secret"
+  * let token = Bun.CSRF.generateWithSecret(secret)
+  * let ok = Bun.CSRF.verifyWithOptions(token, {secret})
+  * ```
+  */
+module CSRF = {
+  /**
+    * Supported hashing algorithms for CSRF tokens
+    */
+  type algorithm =
+    | @as("blake2b256") Blake2b256
+    | @as("blake2b512") Blake2b512
+    | @as("sha256") Sha256
+    | @as("sha384") Sha384
+    | @as("sha512") Sha512
+    | @as("sha512-256") Sha512_256
+
+  /**
+    * Token string encoding
+    */
+  type tokenEncoding = | @as("base64") Base64 | @as("base64url") Base64Url | @as("hex") Hex
+
+  /**
+    * Options for generating CSRF tokens
+    */
+  type generateOptions = {
+    /**
+      * Milliseconds until token expires. 0 means never.
+      * @default 24 * 60 * 60 * 1000
+      */
+    expiresIn?: float,
+    /**
+      * Output encoding for the token string.
+      * @default "base64url"
+      */
+    encoding?: tokenEncoding,
+    /**
+      * Hash algorithm used when generating the token.
+      * @default "sha256"
+      */
+    algorithm?: algorithm,
+  }
+
+  /**
+    * Options for verifying CSRF tokens
+    */
+  type verifyOptions = {
+    /**
+      * Secret used to generate the token. If omitted, the in-memory default secret is used.
+      */
+    secret?: string,
+    /**
+      * Encoding of the token string
+      * @default "base64url"
+      */
+    encoding?: tokenEncoding,
+    /**
+      * Hash algorithm used to generate the token
+      * @default "sha256"
+      */
+    algorithm?: algorithm,
+    /**
+      * Max age in milliseconds. 0 means never.
+      * @default 24 * 60 * 60 * 1000
+      */
+    maxAge?: float,
+  }
+
+  /**
+    * Generate a CSRF token using the in-memory default secret and defaults.
+    */
+  @module("bun") @scope("CSRF")
+  external generate: unit => string = "generate"
+
+  /**
+    * Generate a CSRF token using a provided secret and default options.
+    */
+  @module("bun") @scope("CSRF")
+  external generateWithSecret: string => string = "generate"
+
+  /**
+    * Generate a CSRF token using a provided secret and options.
+    */
+  @module("bun") @scope("CSRF")
+  external generateWithSecretOptions: (string, generateOptions) => string = "generate"
+
+  /**
+    * Generate a CSRF token with only options (when supported by Bun API overloads).
+    */
+  @module("bun") @scope("CSRF")
+  external generateWithOptions: generateOptions => string = "generate"
+
+  /**
+    * Verify a CSRF token with defaults (using in-memory default secret).
+    */
+  @module("bun") @scope("CSRF")
+  external verify: string => bool = "verify"
+
+  /**
+    * Verify a CSRF token with options (typically including `secret`).
+    */
+  @module("bun") @scope("CSRF")
+  external verifyWithOptions: (string, verifyOptions) => bool = "verify"
 }
 
 /**
