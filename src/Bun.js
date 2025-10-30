@@ -166,6 +166,17 @@ let CryptoHasher = {};
 
 let CSRF = {};
 
+let Secrets = {};
+
+let S3File = {};
+
+let S3Client = {};
+
+let S3 = {
+  S3File: S3File,
+  S3Client: S3Client
+};
+
 let FileSystemRouter = {};
 
 let Glob = {};
@@ -190,6 +201,8 @@ export {
   SemVer,
   CryptoHasher,
   CSRF,
+  Secrets,
+  S3,
   FileSystemRouter,
   Glob,
 }

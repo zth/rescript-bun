@@ -6,7 +6,7 @@
   "description": "Use Bun with ReScript.",
   "scripts": {
     "build": "rescript build",
-    "test": "bun test test/*.test.js",
+    "test": "bun test ./test/*.test.js",
     "changeset": "changeset",
     "release": "changeset publish"
   },

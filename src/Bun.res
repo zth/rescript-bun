@@ -2498,6 +2498,287 @@ module CSRF = {
 }
 
 /**
+  * Secure OS-backed secret storage (Keychain/libsecret/Credential Manager)
+  *
+  * Binds to Bun 1.3 `Bun.secrets` API for securely storing credentials.
+  */
+module Secrets = {
+  type getOptions = {service: string, name: string}
+  type setOptions = {service: string, name: string, value: string, allowUnrestrictedAccess?: bool}
+  type deleteOptions = {service: string, name: string}
+
+  /** Retrieve a stored credential. Returns `null` if not found. */
+  @module("bun") @scope("secrets")
+  external get: getOptions => promise<Null.t<string>> = "get"
+
+  /** Store or update a credential. Empty string deletes per Bun's semantics. */
+  @module("bun") @scope("secrets")
+  external set: setOptions => promise<unit> = "set"
+
+  /** Delete a stored credential. Returns true if deleted, false if not found. */
+  @module("bun") @scope("secrets")
+  external delete: deleteOptions => promise<bool> = "delete"
+}
+
+/**
+  * S3-compatible object storage client and file bindings
+  *
+  * Binds to Bun's `S3Client` and default `Bun.s3` instance.
+  */
+module S3 = {
+  /**
+   * Configuration for S3 operations
+   */
+  type acl =
+    | @as("private") Private
+    | @as("public-read") PublicRead
+    | @as("public-read-write") PublicReadWrite
+    | @as("aws-exec-read") AwsExecRead
+    | @as("authenticated-read") AuthenticatedRead
+    | @as("bucket-owner-read") BucketOwnerRead
+    | @as("bucket-owner-full-control") BucketOwnerFullControl
+    | @as("log-delivery-write") LogDeliveryWrite
+
+  type storageClass =
+    | @as("STANDARD") Standard
+    | @as("DEEP_ARCHIVE") DeepArchive
+    | @as("EXPRESS_ONEZONE") ExpressOnezone
+    | @as("GLACIER") Glacier
+    | @as("GLACIER_IR") GlacierIr
+    | @as("INTELLIGENT_TIERING") IntelligentTiering
+    | @as("ONEZONE_IA") OnezoneIa
+    | @as("OUTPOSTS") Outposts
+    | @as("REDUCED_REDUNDANCY") ReducedRedundancy
+    | @as("SNOW") Snow
+    | @as("STANDARD_IA") StandardIa
+
+  type options = {
+    acl?: acl,
+    bucket?: string,
+    region?: string,
+    accessKeyId?: string,
+    secretAccessKey?: string,
+    sessionToken?: string,
+    endpoint?: string,
+    virtualHostedStyle?: bool,
+    partSize?: float,
+    queueSize?: float,
+    retry?: float,
+    @as("type") type_?: string,
+    storageClass?: storageClass,
+    /** @deprecated use partSize/queueSize */
+    highWaterMark?: float,
+  }
+
+  type presignOptions = {
+    ...options,
+    expiresIn?: float,
+    method?: [#GET | #POST | #PUT | #DELETE | #HEAD],
+  }
+
+  type stats = {
+    size: float,
+    lastModified: Date.t,
+    etag: string,
+    @as("type") type_: string,
+  }
+
+  type listObjectsOptions = {
+    prefix?: string,
+    continuationToken?: string,
+    delimiter?: string,
+    maxKeys?: float,
+    startAfter?: string,
+    encodingType?: [#url],
+    fetchOwner?: bool,
+  }
+
+  type listObjectsResponse = {
+    commonPrefixes?: array<{prefix: string}>,
+    contents?: array<
+      {
+        checksumAlgorithm?: [#CRC32 | #CRC32C | #SHA1 | #SHA256 | #CRC64NVME],
+        checksumType?: [#COMPOSITE | #FULL_OBJECT],
+        etag?: string,
+        isLatest?: bool,
+        key?: string,
+        lastModified?: string,
+        owner?: {displayName?: string, id?: string},
+        restoreStatus?: string,
+        size?: float,
+        storageClass?: storageClass,
+      },
+    >,
+    isTruncated?: bool,
+    keyCount?: float,
+    maxKeys?: float,
+    name?: string,
+    nextContinuationToken?: string,
+    prefix?: string,
+    startAfter?: string,
+  }
+
+  module S3File = {
+    type t
+
+    @send external writer: (t, ~options: options=?) => fileSink = "writer"
+
+    @get external readable: t => ReadableStream.t<Uint8Array.t> = "readable"
+    @send external stream: t => ReadableStream.t<Uint8Array.t> = "stream"
+
+    @get external name: t => option<string> = "name"
+    @get external bucket: t => option<string> = "bucket"
+
+    @send external exists: t => promise<bool> = "exists"
+
+    @send external writeString: (t, string, ~options: options=?) => promise<float> = "write"
+    @send external writeBlob: (t, Blob.t, ~options: options=?) => promise<float> = "write"
+    @send external writeBunFile: (t, BunFile.t, ~options: options=?) => promise<float> = "write"
+    @send external writeS3File: (t, t, ~options: options=?) => promise<float> = "write"
+    @send
+    external writeArrayBuffer: (t, ArrayBuffer.t, ~options: options=?) => promise<float> = "write"
+    @send
+    external writeTypedArray: (t, ArrayBufferView.t, ~options: options=?) => promise<float> =
+      "write"
+    @send
+    external writeSharedArrayBuffer: (
+      t,
+      SharedArrayBuffer.t,
+      ~options: options=?,
+    ) => promise<float> = "write"
+    @send external writeResponse: (t, Response.t, ~options: options=?) => promise<float> = "write"
+    @send external writeRequest: (t, Request.t, ~options: options=?) => promise<float> = "write"
+
+    @send external presign: (t, ~options: presignOptions=?) => string = "presign"
+
+    @send external delete: t => promise<unit> = "delete"
+    @send external stat: t => promise<stats> = "stat"
+  }
+
+  module S3Client = {
+    type t
+    type listClientOptions = {
+      accessKeyId?: string,
+      secretAccessKey?: string,
+      sessionToken?: string,
+      region?: string,
+      bucket?: string,
+      endpoint?: string,
+    }
+
+    @module("bun") @new external make: options => t = "S3Client"
+
+    @send external file: (t, string, ~options: options=?) => S3File.t = "file"
+    @module("bun") @scope("S3Client")
+    external fileStatic: (string, ~options: options=?) => S3File.t = "file"
+
+    @send
+    external writeString: (t, string, string, ~options: options=?) => promise<float> = "write"
+    @send
+    external writeBlob: (t, string, Blob.t, ~options: options=?) => promise<float> = "write"
+    @send
+    external writeBunFile: (t, string, BunFile.t, ~options: options=?) => promise<float> = "write"
+    @send
+    external writeS3File: (t, string, S3File.t, ~options: options=?) => promise<float> = "write"
+    @send
+    external writeArrayBuffer: (t, string, ArrayBuffer.t, ~options: options=?) => promise<float> =
+      "write"
+    @send
+    external writeTypedArray: (
+      t,
+      string,
+      ArrayBufferView.t,
+      ~options: options=?,
+    ) => promise<float> = "write"
+    @send
+    external writeSharedArrayBuffer: (
+      t,
+      string,
+      SharedArrayBuffer.t,
+      ~options: options=?,
+    ) => promise<float> = "write"
+    @send
+    external writeResponse: (t, string, Response.t, ~options: options=?) => promise<float> = "write"
+    @send
+    external writeRequest: (t, string, Request.t, ~options: options=?) => promise<float> = "write"
+
+    @module("bun") @scope("S3Client")
+    external writeStringStatic: (string, string, ~options: options=?) => promise<float> = "write"
+    @module("bun") @scope("S3Client")
+    external writeBlobStatic: (string, Blob.t, ~options: options=?) => promise<float> = "write"
+    @module("bun") @scope("S3Client")
+    external writeBunFileStatic: (string, BunFile.t, ~options: options=?) => promise<float> =
+      "write"
+    @module("bun") @scope("S3Client")
+    external writeS3FileStatic: (string, S3File.t, ~options: options=?) => promise<float> = "write"
+    @module("bun") @scope("S3Client")
+    external writeArrayBufferStatic: (
+      string,
+      ArrayBuffer.t,
+      ~options: options=?,
+    ) => promise<float> = "write"
+    @module("bun") @scope("S3Client")
+    external writeTypedArrayStatic: (
+      string,
+      ArrayBufferView.t,
+      ~options: options=?,
+    ) => promise<float> = "write"
+    @module("bun") @scope("S3Client")
+    external writeSharedArrayBufferStatic: (
+      string,
+      SharedArrayBuffer.t,
+      ~options: options=?,
+    ) => promise<float> = "write"
+    @module("bun") @scope("S3Client")
+    external writeResponseStatic: (string, Response.t, ~options: options=?) => promise<float> =
+      "write"
+    @module("bun") @scope("S3Client")
+    external writeRequestStatic: (string, Request.t, ~options: options=?) => promise<float> =
+      "write"
+
+    @send external presign: (t, string, ~options: presignOptions=?) => string = "presign"
+    @module("bun") @scope("S3Client")
+    external presignStatic: (string, ~options: presignOptions=?) => string = "presign"
+
+    @send external unlink: (t, string, ~options: options=?) => promise<unit> = "unlink"
+    @module("bun") @scope("S3Client")
+    external unlinkStatic: (string, ~options: options=?) => promise<unit> = "unlink"
+
+    @send external delete: (t, string, ~options: options=?) => promise<unit> = "delete"
+    @module("bun") @scope("S3Client")
+    external deleteStatic: (string, ~options: options=?) => promise<unit> = "delete"
+
+    @send external size: (t, string, ~options: options=?) => promise<float> = "size"
+    @module("bun") @scope("S3Client")
+    external sizeStatic: (string, ~options: options=?) => promise<float> = "size"
+
+    @send external exists: (t, string, ~options: options=?) => promise<bool> = "exists"
+    @module("bun") @scope("S3Client")
+    external existsStatic: (string, ~options: options=?) => promise<bool> = "exists"
+
+    @send external stat: (t, string, ~options: options=?) => promise<stats> = "stat"
+    @module("bun") @scope("S3Client")
+    external statStatic: (string, ~options: options=?) => promise<stats> = "stat"
+
+    @send
+    external list: (
+      t,
+      ~input: listObjectsOptions=?,
+      ~options: listClientOptions=?,
+    ) => promise<listObjectsResponse> = "list"
+
+    @module("bun") @scope("S3Client")
+    external listStatic: (
+      ~input: listObjectsOptions=?,
+      ~options: listClientOptions=?,
+    ) => promise<listObjectsResponse> = "list"
+  }
+
+  @module("bun")
+  external s3: S3Client.t = "s3"
+}
+
+/**
    * Resolve a `Promise` after milliseconds. This is like
    * {@link setTimeout} except it returns a `Promise`.
    *
