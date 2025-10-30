@@ -845,11 +845,6 @@ type requestMode =
   | @as("no-cors") NoCors
   | @as("same-origin") SameOriginMode
 
-type requestRedirect =
-  | @as("error") Error
-  | @as("follow") Follow
-  | @as("manual") Manual
-
 type referrerPolicy =
   | @as("") Empty
   | @as("no-referrer") NoReferrer
@@ -899,69 +894,6 @@ module BodyInit = {
   external makeFromURLSearchParams: URLSearchParams.t => t = "%identity"
 }
 
-type requestInit = {
-  /**
-   * A BodyInit object or null to set request's body.
-   */
-  body?: Null.t<BodyInit.t>,
-  /**
-   * A string indicating how the request will interact with the browser's cache to set request's cache.
-   *
-   * Note: as of Bun v0.5.7, this is not implemented yet.
-   */
-  cache?: requestCache,
-  /**
-   * A string indicating whether credentials will be sent with the request always, never, or only when sent to a same-origin URL. Sets request's credentials.
-   */
-  credentials?: requestCredentials,
-  /**
-   * A Headers object, an object literal, or an array of two-item arrays to set request's headers.
-   */
-  headers?: HeadersInit.t,
-  /**
-   * A cryptographic hash of the resource to be fetched by request. Sets request's integrity.
-   *
-   * Note: as of Bun v0.5.7, this is not implemented yet.
-   */
-  integrity?: string,
-  /**
-   * A boolean to set request's keepalive.
-   *
-   * Available in Bun v0.2.0 and above.
-   *
-   * This is enabled by default
-   */
-  keepalive?: bool,
-  /**
-   * A string to set request's method.
-   */
-  method?: string,
-  /**
-   * A string to indicate whether the request will use CORS, or will be restricted to same-origin URLs. Sets request's mode.
-   */
-  mode?: requestMode,
-  /**
-   * A string indicating whether request follows redirects, results in an error upon encountering a redirect, or returns the redirect (in an opaque fashion). Sets request's redirect.
-   */
-  redirect?: requestRedirect,
-  /**
-   * A string whose value is a same-origin URL, "about:client", or the empty string, to set request's referrer.
-   */
-  referrer?: string,
-  /**
-   * A referrer policy to set request's referrerPolicy.
-   */
-  referrerPolicy?: referrerPolicy,
-  /**
-   * An AbortSignal to set request's signal.
-   */
-  signal?: Null.t<AbortSignal.t>,
-  /**
-   * Enable or disable HTTP request timeout
-   */
-  timeout?: bool,
-}
-
 type checkServerIdentity
 
 type tlsConfig = {rejectUnauthorized?: bool} // Defaults to true
@@ -971,32 +903,80 @@ type fetchRequestInitTls = {
   checkServerIdentity?: checkServerIdentity, // TODO: change `any` to `checkServerIdentity`
 }
 
-type fetchRequestInit = {
-  ...requestInit,
-  /**
-   * Log the raw HTTP request & response to stdout. This API may be
-   * removed in a future version of Bun without notice.
-   * This is a custom property that is not part of the Fetch API specification.
-   * It exists mostly as a debugging tool
-   */
-  verbose?: bool,
-  /**
-   * Override http_proxy or HTTPS_PROXY
-   * This is a custom property that is not part of the Fetch API specification.
-   */
-  proxy?: string,
-  /**
-   * Override the default TLS options
-   */
-  tls?: fetchRequestInitTls,
-}
-
 /** All possible HTTP methods. */
 type method = GET | HEAD | POST | PUT | DELETE | CONNECT | OPTIONS | TRACE | PATCH
 
 // https://github.com/oven-sh/bun/blob/main/packages/bun-types/globals.d.ts#L1331
 module Request = {
   type t
+
+  type requestRedirect =
+    | @as("error") Error
+    | @as("follow") Follow
+    | @as("manual") Manual
+
+  type requestInit = {
+    /**
+   * A BodyInit object or null to set request's body.
+   */
+    body?: Null.t<BodyInit.t>,
+    /**
+   * A string indicating how the request will interact with the browser's cache to set request's cache.
+   *
+   * Note: as of Bun v0.5.7, this is not implemented yet.
+   */
+    cache?: requestCache,
+    /**
+   * A string indicating whether credentials will be sent with the request always, never, or only when sent to a same-origin URL. Sets request's credentials.
+   */
+    credentials?: requestCredentials,
+    /**
+   * A Headers object, an object literal, or an array of two-item arrays to set request's headers.
+   */
+    headers?: HeadersInit.t,
+    /**
+   * A cryptographic hash of the resource to be fetched by request. Sets request's integrity.
+   *
+   * Note: as of Bun v0.5.7, this is not implemented yet.
+   */
+    integrity?: string,
+    /**
+   * A boolean to set request's keepalive.
+   *
+   * Available in Bun v0.2.0 and above.
+   *
+   * This is enabled by default
+   */
+    keepalive?: bool,
+    /**
+   * A string to set request's method.
+   */
+    method?: string,
+    /**
+   * A string to indicate whether the request will use CORS, or will be restricted to same-origin URLs. Sets request's mode.
+   */
+    mode?: requestMode,
+    /**
+   * A string indicating whether request follows redirects, results in an error upon encountering a redirect, or returns the redirect (in an opaque fashion). Sets request's redirect.
+   */
+    redirect?: requestRedirect,
+    /**
+   * A string whose value is a same-origin URL, "about:client", or the empty string, to set request's referrer.
+   */
+    referrer?: string,
+    /**
+   * A referrer policy to set request's referrerPolicy.
+   */
+    referrerPolicy?: referrerPolicy,
+    /**
+   * An AbortSignal to set request's signal.
+   */
+    signal?: Null.t<AbortSignal.t>,
+    /**
+   * Enable or disable HTTP request timeout
+   */
+    timeout?: bool,
+  }
 
   /**
    * Read or write the HTTP headers for this request.
@@ -1172,6 +1152,32 @@ module Request = {
 
   @new
   external makeFromRequest: (t, ~requestInit: requestInit=?) => t = "Request"
+}
+
+@deprecated({
+  reason: "Use Request.requestRedirect instead",
+  migrate: %replace.type(: Request.requestRedirect),
+})
+type requestRedirect = Request.requestRedirect
+
+type fetchRequestInit = {
+  ...Request.requestInit,
+  /**
+   * Log the raw HTTP request & response to stdout. This API may be
+   * removed in a future version of Bun without notice.
+   * This is a custom property that is not part of the Fetch API specification.
+   * It exists mostly as a debugging tool
+   */
+  verbose?: bool,
+  /**
+   * Override http_proxy or HTTPS_PROXY
+   * This is a custom property that is not part of the Fetch API specification.
+   */
+  proxy?: string,
+  /**
+   * Override the default TLS options
+   */
+  tls?: fetchRequestInitTls,
 }
 
 module Crypto = {
@@ -1363,7 +1369,7 @@ external performance: performance = "performance"
  *
  *
  */
-external fetchByRequest: (Request.t, ~init: requestInit=?) => promise<Response.t> = "fetch"
+external fetchByRequest: (Request.t, ~init: Request.requestInit=?) => promise<Response.t> = "fetch"
 /**
  * Send a HTTP(s) request
  *

@@ -2526,6 +2526,8 @@ module Secrets = {
   * Binds to Bun's `S3Client` and default `Bun.s3` instance.
   */
 module S3 = {
+  @@warning("-30")
+
   /**
    * Configuration for S3 operations
    */
