@@ -23,7 +23,7 @@ let object = (function(t, obj, cols) {
   });
 
 let values = (function(t, values) {
-    return t(arr)
+    return t(values)
   });
 
 export {
