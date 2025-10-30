@@ -60,8 +60,7 @@ module Describe = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("describe")
+  @module("bun:test") @scope("describe")
   external only: (string, unit => unit) => unit = "only"
 
   /**
@@ -70,8 +69,7 @@ module Describe = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("describe")
+  @module("bun:test") @scope("describe")
   external skip: (string, unit => unit) => unit = "skip"
 
   /**
@@ -80,8 +78,7 @@ module Describe = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("describe")
+  @module("bun:test") @scope("describe")
   external todo: (string, ~test: unit => unit=?) => unit = "todo"
 
   /**
@@ -91,8 +88,7 @@ module Describe = {
      *
      * @param condition if these tests should run
      */
-  @module("bun:test")
-  @scope("describe")
+  @module("bun:test") @scope("describe")
   external if_: bool => (string, unit => unit) => unit = "if"
 
   /**
@@ -100,8 +96,7 @@ module Describe = {
      *
      * @param condition if these tests should be skipped
      */
-  @module("bun:test")
-  @scope("describe")
+  @module("bun:test") @scope("describe")
   external skipIf: bool => (string, unit => unit) => unit = "skipIf"
 
   // TODO: each
@@ -407,8 +402,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external only: (string, unit => unit, ~options: timeoutOrOptions=?) => unit = "only"
 
   /**
@@ -417,8 +411,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external onlyAsync: (string, unit => promise<unit>, ~options: timeoutOrOptions=?) => unit = "only"
 
   /**
@@ -427,8 +420,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external onlyCallback: (
     string,
     callbackFunction<_> => unit,
@@ -441,8 +433,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external skip: (string, unit => unit) => unit = "skip"
 
   /**
@@ -451,8 +442,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external skipAsync: (string, unit => promise<unit>, ~options: timeoutOrOptions=?) => unit = "skip"
 
   /**
@@ -461,8 +451,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external skipCallback: (
     string,
     callbackFunction<_> => unit,
@@ -475,8 +464,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external todo: (string, ~test: unit => unit=?) => unit = "todo"
 
   /**
@@ -485,8 +473,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external todoAsync: (string, unit => promise<unit>, ~options: timeoutOrOptions=?) => unit = "todo"
 
   /**
@@ -495,8 +482,7 @@ module Test = {
      * @param label the label for the tests
      * @param fn the function that defines the tests
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external todoCallback: (
     string,
     callbackFunction<_> => unit,
@@ -510,8 +496,7 @@ module Test = {
      *
      * @param condition if these tests should run
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external if_: bool => (string, unit => unit) => unit = "if"
 
   /**
@@ -521,8 +506,7 @@ module Test = {
      *
      * @param condition if these tests should run
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external ifAsync: (string, unit => promise<unit>, ~options: timeoutOrOptions=?) => unit = "if"
 
   /**
@@ -532,8 +516,7 @@ module Test = {
      *
      * @param condition if these tests should run
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external ifCallback: (string, callbackFunction<_> => unit, ~options: timeoutOrOptions=?) => unit =
     "if"
 
@@ -542,8 +525,7 @@ module Test = {
      *
      * @param condition if these tests should be skipped
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external skipIf: bool => (string, unit => unit) => unit = "skipIf"
 
   /**
@@ -551,17 +533,15 @@ module Test = {
      *
      * @param condition if these tests should be skipped
      */
-  @module("bun:test")
-  @scope("test")
+  @module("bun:test") @scope("test")
   external skipIfAsAsync: (string, unit => promise<unit>, ~options: timeoutOrOptions=?) => unit =
     "skipIf"
-  @module("bun:test")
-  @scope("test")
   /**
      * Skips this group of tests, if `condition` is true.
      *
      * @param condition if these tests should be skipped
      */
+  @module("bun:test") @scope("test")
   external skipIfAsCallback: (
     string,
     callbackFunction<_> => unit,
@@ -923,7 +903,7 @@ module Expect = {
   external toThrow: (t<_>, ~expected: expectedToThrow=?) => unit = "toThrow"
 
   @send
-  external toThrowThisError: (t<_>, Error.t) => unit = "toThrow"
+  external toThrowThisError: (t<_>, JsError.t) => unit = "toThrow"
 
   /**
      * Asserts that a value matches a regular expression or includes a substring.

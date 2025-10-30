@@ -44,8 +44,7 @@ module Database = {
   type dbOptions = {readonly?: bool, create?: bool, strict?: bool}
 
   /** Creates a new database. */
-  @module("bun:sqlite")
-  @new
+  @module("bun:sqlite") @new
   external make: (string, ~options: dbOptions=?) => t = "Database"
 
   /**
@@ -57,8 +56,7 @@ module Database = {
    let db = Database.makeInMemory()
    ```
    */
-  @module("bun:sqlite")
-  @new
+  @module("bun:sqlite") @new
   external makeInMemory: (@as(":memory:") _, ~options: dbOptions=?) => t = "Database"
 
   /**

@@ -83,7 +83,7 @@ external getUrlWithOptionsCallback: (
 @module("node:https") external globalAgent: Agent.t = "globalAgent"
 @module("node:https") external maxHeaderSize: int = "maxHeaderSize"
 
-type statusCodes = Js.Dict.t<string>
+type statusCodes = dict<string>
 @module("node:https") external _STATUS_CODES: statusCodes = "STATUS_CODES"
 
 type methods = array<string>

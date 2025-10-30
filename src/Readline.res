@@ -2,7 +2,7 @@ module Interface = {
   type t
   @send external close: t => unit = "close"
   @send external pause: t => unit = "pause"
-  @send external prompt: (t, Js.nullable<bool>) => unit = "prompt"
+  @send external prompt: (t, Nullable.t<bool>) => unit = "prompt"
   @send
   external question: (t, string, string => unit) => unit = "question"
   @send external resume: t => unit = "resume"
@@ -15,20 +15,18 @@ module Interface = {
     name?: string,
   }
   @send
-  external writeKey: (t, Js.Null.t<string>, keyOptions) => unit = "write"
+  external writeKey: (t, Null.t<string>, keyOptions) => unit = "write"
   @send
   external writeKey2: (
     t,
-    Js.Null.t<string>,
+    Null.t<string>,
     {"ctrl": option<bool>, "meta": option<bool>, "shift": option<bool>, "name": option<string>},
   ) => unit = "write"
   @get @return(nullable) external line: t => option<string> = "line"
   @get @return(nullable)
   external cursor: t => option<int> = "cursor"
 
-  include EventEmitter.Impl({
-    type t = t
-  })
+  include EventEmitter.Impl({type t = t})
 }
 
 module Events = {

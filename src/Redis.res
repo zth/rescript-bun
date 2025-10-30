@@ -5,9 +5,9 @@ module RedisClient = {
 
   @unboxed
   type keyLike =
-  | String(string)
-  | ArrayBufferView(Types.ArrayBufferView.t)
-  | Blob(Js.Blob.t)
+    | String(string)
+    | ArrayBufferView(Types.ArrayBufferView.t)
+    | Blob(Js.Blob.t)
 
   type redisOptions = {
     connectionTimeout?: int,
@@ -16,11 +16,10 @@ module RedisClient = {
     maxRetries?: int,
     enableOfflineQueue?: bool,
     tls?: bool,
-    enableAutoPipelining?: bool
+    enableAutoPipelining?: bool,
   }
 
-  @module("bun")
-  @new
+  @module("bun") @new
   external make: (~url: string=?, ~options: redisOptions=?) => t = "RedisClient"
 
   @external @get
@@ -54,47 +53,23 @@ module RedisClient = {
   external set: (t, string, keyLike) => promise<[#OK]> = "set"
 
   @external @send
-  external setWithExpiry: (
-    t,
-    string,
-    keyLike,
-    [#EX | #PX | #EXAT | #PXAT],
-    int, 
-  ) => promise<[#OK]> = "set"
+  external setWithExpiry: (t, string, keyLike, [#EX | #PX | #EXAT | #PXAT], int) => promise<[#OK]> =
+    "set"
 
   @external @send
-  external setWithExists: (
-    t,
-    string,
-    keyLike,
-    [#NX | #XX]
-  ) => promise<Null.t<[#OK]>> = "set"
+  external setWithExists: (t, string, keyLike, [#NX | #XX]) => promise<Null.t<[#OK]>> = "set"
 
   @external @send
-  external setWithGet: (
-    t,
-    string,
-    keyLike,
-    [#GET]
-  ) => promise<Null.t<string>> = "set"
+  external setWithGet: (t, string, keyLike, [#GET]) => promise<Null.t<string>> = "set"
 
   @external @send
-  external setKeepTTL: (
-    t,
-    string,
-    keyLike,
-    [#KEEPTTL]
-  ) => promise<[#OK]> = "set"
+  external setKeepTTL: (t, string, keyLike, [#KEEPTTL]) => promise<[#OK]> = "set"
 
   @external @send @variadic
-  external setWithOptions: (
-    t,
-    string,
-    keyLike,
-    array<setOptions> 
-  ) => promise<Null.t<string>> = "set"
+  external setWithOptions: (t, string, keyLike, array<setOptions>) => promise<Null.t<string>> =
+    "set"
 
-  @external @send  @variadic
+  @external @send @variadic
   external del: (t, array<string>) => promise<int> = "del"
 
   @external @send
@@ -135,7 +110,7 @@ module RedisClient = {
 
   @external @send
   external spop: (t, string) => promise<Null.t<string>> = "spop"
-  
+
   @external @send
   external hincrby: (t, string, string, int) => promise<int> = "hincrby"
 

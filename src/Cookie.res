@@ -1,13 +1,13 @@
 @unboxed
-type expires = 
-| MsSinceEpoch(Date.msSinceEpoch)
-| Date(Date.t)
-| ISOString(string)
+type expires =
+  | MsSinceEpoch(Date.msSinceEpoch)
+  | Date(Date.t)
+  | ISOString(string)
 
 type sameSite =
-| @as("strict") Strict
-| @as("lax") Lax
-| @as("none") None
+  | @as("strict") Strict
+  | @as("lax") Lax
+  | @as("none") None
 
 type cookieInit = {
   name?: string,
@@ -39,4 +39,4 @@ external fromString: string => t = "Cookie"
 external parse: string => t = "parse"
 
 @module("bun") @scope("Cookie")
-external from: (string, string, ~options:cookieInit=?) => t = "from"
+external from: (string, string, ~options: cookieInit=?) => t = "from"

@@ -10,7 +10,7 @@ type cookieStoreDeleteOptions = {
 external make: unit => t = "CookieMap"
 
 @module("bun") @new
-external fromArray: array<(string, string)> => t = "CookieMap" 
+external fromArray: array<(string, string)> => t = "CookieMap"
 
 @module("bun") @new
 external fromDictionary: dict<string> => t = "CookieMap"
@@ -30,4 +30,3 @@ external fromString: string => t = "CookieMap"
 @send external keys: t => Iterator.t<string> = "entries"
 @send external values: t => Iterator.t<string> = "entries"
 @send external forEach: (t, (string, string, t) => unit) => unit = "forEach"
-

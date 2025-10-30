@@ -436,7 +436,7 @@ type genericServeOptions = {
   /*
    * Error handling function
    */
-  error?: (Server.t, Error.t) => option<Response.t>,
+  error?: (Server.t, JsError.t) => option<Response.t>,
   /*
    * Uniquely identify a server instance with an ID
    *
@@ -1152,7 +1152,7 @@ module FileSink = {
      * Close the file descriptor. This also flushes the internal buffer.
      */
   @send
-  external end: (t, ~error: Error.t=?) => floatOrPromisedFloat = "end"
+  external end: (t, ~error: JsError.t=?) => floatOrPromisedFloat = "end"
 
   type startOptions = {
     /**

@@ -1,25 +1,25 @@
 open Globals
 module SQLQuery = {
   type t<'a> = promise<'a>
-  
+
   @val external active: t<'a> => bool = "active"
   @val external cancelled: t<'a> => bool = "cancelled"
   @send external cancel: t<'a> => t<'a> = "cancel"
   @send external simple: t<'a> => t<'a> = "simple"
   @send external execute: t<'a> => t<'a> = "execute"
   @send external raw: t<'a> => t<'a> = "raw"
-  @send external values: t<'a> => t<'a> = "values" 
+  @send external values: t<'a> => t<'a> = "values"
 }
 
 @unboxed
 type rec param =
-| Boolean(bool)
-| @as(null) Null
-| String(string)
-| Number(float)
-| Dict(dict<param>)
-| Array(array<param>)
-| Query(SQLQuery.t<param>)
+  | Boolean(bool)
+  | @as(null) Null
+  | String(string)
+  | Number(float)
+  | Dict(dict<param>)
+  | Array(array<param>)
+  | Query(SQLQuery.t<param>)
 
 type t
 
@@ -56,17 +56,15 @@ let values: (t, array<'a>) => SQLQuery.t<param> = %raw(`
 `)
 
 @send
-external commitDistributed: (t, string) => promise<unit> = "commitDistributed" 
+external commitDistributed: (t, string) => promise<unit> = "commitDistributed"
 
 @send
-external rollbackDistributed: (t, string) => promise<unit> = "rollbackDistributed" 
+external rollbackDistributed: (t, string) => promise<unit> = "rollbackDistributed"
 
 @send
-external connect: (t, unit) => promise<unit> = "connect" 
+external connect: (t, unit) => promise<unit> = "connect"
 
-type options = {
-  timeout?: float
-}
+type options = {timeout?: float}
 
 @send
 external close: (t, ~options: options=?) => promise<unit> = "close"
@@ -80,7 +78,7 @@ external flush: t => unit = "flush"
 @send
 external reserve: t => t = "reserve"
 
-type sqlTransactionContextCallback<'a> = t => promise<'a> 
+type sqlTransactionContextCallback<'a> = t => promise<'a>
 
 @send
 external begin: (t, sqlTransactionContextCallback<'b>) => promise<'a> = "begin"
@@ -89,7 +87,8 @@ external begin: (t, sqlTransactionContextCallback<'b>) => promise<'a> = "begin"
 external transaction: (t, sqlTransactionContextCallback<'b>) => promise<'a> = "transaction"
 
 @send
-external beginDistributed: (t, string, sqlTransactionContextCallback<'b>) => promise<'a> = "beginDistributed"
+external beginDistributed: (t, string, sqlTransactionContextCallback<'b>) => promise<'a> =
+  "beginDistributed"
 
 @send
 external distributed: (t, string, sqlTransactionContextCallback<'b>) => promise<'a> = "distributed"
@@ -98,7 +97,7 @@ external distributed: (t, string, sqlTransactionContextCallback<'b>) => promise<
 external unsafe: (t, string, ~values: array<JSON.t>=?) => SQLQuery.t<param> = "unsafe"
 
 @send
-external file: (t, string, ~values: array<JSON.t>=?) => SQLQuery.t<param> = "file" 
+external file: (t, string, ~values: array<JSON.t>=?) => SQLQuery.t<param> = "file"
 
 type rec sqlOptions = {
   filename?: string,

@@ -57,8 +57,7 @@ module AsyncLocalStorage = {
      * @param fn The function to bind to the current execution context.
      * @return A new function that calls `fn` within the captured execution context.
      */
-  @module("node:async_hooks")
-  @scope("AsyncLocalStorage")
+  @module("node:async_hooks") @scope("AsyncLocalStorage")
   external bind: 'function => 'function = "bind"
 
   // TODO: Snapshot

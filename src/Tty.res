@@ -53,11 +53,11 @@ module WriteStream = {
     @get external columns: t => int = "columns"
     @send external getColorDepth: t => int = "getColorDepth"
     @send
-    external getColorDepthFromEnv: (t, Js.Dict.t<'ty>) => int = "getColorDepth"
+    external getColorDepthFromEnv: (t, dict<'ty>) => int = "getColorDepth"
     @send external getWindowSize: t => (int, int) = "getWindowSize"
     @send external hasColors: (t, int) => bool = "hasColors"
     @send
-    external hasColorsFromEnv: (t, int, Js.Dict.t<'ty>) => bool = "hasColors"
+    external hasColorsFromEnv: (t, int, dict<'ty>) => bool = "hasColors"
     @send external hasAtLeast16Colors: t => bool = "hasColors"
     @send
     external moveCursor: (t, int, int, @uncurry (unit => unit)) => bool = "moveCursor"

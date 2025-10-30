@@ -64,7 +64,7 @@ module Impl: {
   let classify: t => case = x =>
     switch x {
     | BinaryLike(binaryLike) =>
-      if Js.typeof(binaryLike) === "string" {
+      if typeof(binaryLike) === #string {
         String(Obj.magic(binaryLike))
       } else if Buffer.isBuffer(binaryLike) {
         Buffer(Obj.magic(binaryLike))

@@ -27,7 +27,7 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.29.5",
-    "rescript": "12.0.0-beta.11"
+    "rescript": "12.0.0-rc.3"
   },
   "peerDependencies": {
     "rescript": ">= 12.0.0-alpha.4"

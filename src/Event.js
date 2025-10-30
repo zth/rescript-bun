@@ -3,40 +3,34 @@
 
 function classify(evt) {
   let match = typeof evt;
-  switch (match) {
-    case "string" :
-      return {
-        TAG: "String",
-        _0: evt
-      };
-    case "symbol" :
-      return {
-        TAG: "Symbol",
-        _0: evt
-      };
-    default:
-      return "Unknown";
+  if (match === "symbol") {
+    return {
+      TAG: "Symbol",
+      _0: evt
+    };
+  } else if (match === "string") {
+    return {
+      TAG: "String",
+      _0: evt
+    };
+  } else {
+    return "Unknown";
   }
 }
 
 function eq(event1, event2) {
   let match = typeof event1;
   let match$1 = typeof event2;
-  switch (match) {
-    case "string" :
-      if (match$1 === "string") {
-        return event1 === event2;
-      } else {
-        return false;
-      }
-    case "symbol" :
-      if (match$1 === "symbol") {
-        return event1 === event2;
-      } else {
-        return false;
-      }
-    default:
+  if (match === "symbol") {
+    if (match$1 === "symbol") {
+      return event1 === event2;
+    } else {
       return false;
+    }
+  } else if (match === "string" && match$1 === "string") {
+    return event1 === event2;
+  } else {
+    return false;
   }
 }
 

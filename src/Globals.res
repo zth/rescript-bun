@@ -120,7 +120,7 @@ type messagePort
 // TODO: Process
 
 module HeadersInit = {
-  @unboxed type t = FromArray(array<(string, string)>) | FromDict(Js.Dict.t<string>)
+  @unboxed type t = FromArray(array<(string, string)>) | FromDict(dict<string>)
 }
 
 /**
@@ -316,7 +316,7 @@ type underlyingSource<'r> = {
 module ReadableStreamDirectController = {
   type t
 
-  @send external close: (t, ~error: Error.t=?) => unit = "close"
+  @send external close: (t, ~error: JsError.t=?) => unit = "close"
   @send external writeBufferSource: (t, BufferSource.t) => float = "write"
   @send external writeBufferSourceAsync: (t, BufferSource.t) => promise<float> = "write"
 
@@ -668,8 +668,7 @@ module URLSearchParams = {
   external delete: (t, string) => unit = "delete"
 
   /** Returns the first value associated to the given search parameter. */
-  @send
-  @return(nullable)
+  @send @return(nullable)
   external get: (t, string) => option<string> = "get"
 
   /** Returns all the values association with a given search parameter. */
@@ -763,8 +762,7 @@ module Response = {
   external headers: t => Headers.t = "headers"
 
   /** HTTP response body as a ReadableStream */
-  @get
-  @return(nullable)
+  @get @return(nullable)
   external body: t => option<ReadableStream.t<'t>> = "body"
 
   /** Has the body of the response already been consumed? */
@@ -2212,16 +2210,14 @@ module Shell = {
      * console.log(result) // ['index.js', 'index.jsx', 'index.ts', 'index.tsx']
      * ```
      */
-  @module("bun")
-  @scope("$")
+  @module("bun") @scope("$")
   external braces: string => array<string> = "braces"
 
   /**
      * Escape strings for input into shell commands.
      * @param input
      */
-  @module("bun")
-  @scope("$")
+  @module("bun") @scope("$")
   external escape: string => string = "escape"
 }
 

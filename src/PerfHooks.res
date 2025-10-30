@@ -101,10 +101,10 @@ module PerformanceObserverEntryList = {
   @send
   external getEntries: t => array<PerformanceEntry.t> = "getEntries"
   @send
-  external getEntriesByName: (t, string, Js.Nullable.t<string>) => array<PerformanceEntry.t> =
+  external getEntriesByName: (t, string, Nullable.t<string>) => array<PerformanceEntry.t> =
     "getEntriesByName"
   let getEntriesByName = (entryList, ~type_=?, name) =>
-    getEntriesByName(entryList, name, Js.Nullable.fromOption(type_))
+    getEntriesByName(entryList, name, Nullable.fromOption(type_))
   @send
   external getEntriesByType: (t, string) => array<PerformanceEntry.t> = "getEntriesByType"
 }
@@ -116,7 +116,6 @@ module PerformanceObserver = {
 }
 
 @module("node:perf_hooks")
-external monitorEventLoopDelay: Js.Nullable.t<{"resolution": float}> => Histogram.t =
-  "eventLoopDelay"
+external monitorEventLoopDelay: Nullable.t<{"resolution": float}> => Histogram.t = "eventLoopDelay"
 let monitorEventLoopDelay = (~resolution=?, ()) =>
-  monitorEventLoopDelay(Js.Nullable.fromOption(resolution))
+  monitorEventLoopDelay(Nullable.fromOption(resolution))

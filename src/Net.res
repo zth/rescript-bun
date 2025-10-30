@@ -33,7 +33,7 @@ module Socket = {
     external onData: (
       subtype<'w, 'r, 'ty>,
       @as("data") _,
-      @uncurry 'r => unit,
+      @uncurry ('r => unit),
     ) => subtype<'w, 'r, 'ty> = "on"
     @send
     external onDrain: (
@@ -51,7 +51,7 @@ module Socket = {
     external onError: (
       subtype<'w, 'r, 'ty>,
       @as("error") _,
-      @uncurry Js.Exn.t => unit,
+      @uncurry (JsExn.t => unit),
     ) => subtype<'w, 'r, 'ty> = "on"
     @send
     external onLookup: (
@@ -88,7 +88,7 @@ module Socket = {
     external offData: (
       subtype<'w, 'r, 'ty>,
       @as("data") _,
-      @uncurry 'r => unit,
+      @uncurry ('r => unit),
     ) => subtype<'w, 'r, 'ty> = "off"
     @send
     external offDrain: (
@@ -106,7 +106,7 @@ module Socket = {
     external offError: (
       subtype<'w, 'r, 'ty>,
       @as("error") _,
-      @uncurry Js.Exn.t => unit,
+      @uncurry (JsExn.t => unit),
     ) => subtype<'w, 'r, 'ty> = "off"
     @send
     external offLookup: (
@@ -143,7 +143,7 @@ module Socket = {
     external onDataOnce: (
       subtype<'w, 'r, 'ty>,
       @as("data") _,
-      @uncurry 'r => unit,
+      @uncurry ('r => unit),
     ) => subtype<'w, 'r, 'ty> = "once"
     @send
     external onDrainOnce: (
@@ -161,7 +161,7 @@ module Socket = {
     external onErrorOnce: (
       subtype<'w, 'r, 'ty>,
       @as("error") _,
-      @uncurry Js.Exn.t => unit,
+      @uncurry (JsExn.t => unit),
     ) => subtype<'w, 'r, 'ty> = "once"
     @send
     external onLookupOnce: (
@@ -195,7 +195,7 @@ module Socket = {
     external connecting: subtype<'w, 'r, 'ty> => bool = "connecting"
     @get external destroyed: subtype<'w, 'r, 'ty> => bool = "destroyed"
     @send
-    external destroy: (subtype<'w, 'r, 'ty>, ~error: option<Js.Exn.t>) => subtype<'w, 'r, 'ty> =
+    external destroy: (subtype<'w, 'r, 'ty>, ~error: option<JsExn.t>) => subtype<'w, 'r, 'ty> =
       "destroy"
     @get
     external localAddress: subtype<'w, 'r, 'ty> => string = "localAddress"
@@ -244,9 +244,7 @@ module Socket = {
     ) => 'tcpSocket = "connect"
   }
   include Impl
-  include EventEmitter.Impl({
-    type t = t
-  })
+  include EventEmitter.Impl({type t = t})
 
   type options = {fd?: int, readable?: bool, writable?: bool}
 
@@ -312,7 +310,7 @@ module Server = {
     external onConnection: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry Socket.t => unit,
+      @uncurry (Socket.t => unit),
     ) => subtype<'ty> = "on"
     @send
     external onListening: (
@@ -328,7 +326,7 @@ module Server = {
     external offConnection: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry Socket.t => unit,
+      @uncurry (Socket.t => unit),
     ) => subtype<'ty> = "off"
     @send
     external offListening: (
@@ -346,7 +344,7 @@ module Server = {
     external onConnectionOnce: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry Socket.t => unit,
+      @uncurry (Socket.t => unit),
     ) => subtype<'ty> = "once"
     @send
     external onListeningOnce: (
@@ -358,13 +356,10 @@ module Server = {
   module Impl = {
     include Events
     @send
-    external close: (
-      subtype<'ty>,
-      ~callback: Js.nullable<Js.Exn.t> => unit=?,
-      unit,
-    ) => subtype<'ty> = "close"
+    external close: (subtype<'ty>, ~callback: Nullable.t<JsExn.t> => unit=?, unit) => subtype<'ty> =
+      "close"
     @send
-    external getConnections: (subtype<'ty>, (Js.nullable<Js.Exn.t>, int) => unit) => subtype<'ty> =
+    external getConnections: (subtype<'ty>, (Nullable.t<JsExn.t>, int) => unit) => subtype<'ty> =
       "getConnections"
     @set
     external setMaxConnections: (subtype<'ty>, int) => unit = "maxConnections"
@@ -391,7 +386,7 @@ module TcpServer = {
     external onConnection: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry TcpSocket.t => unit,
+      @uncurry (TcpSocket.t => unit),
     ) => subtype<'ty> = "on"
     @send
     external onListening: (
@@ -407,7 +402,7 @@ module TcpServer = {
     external offConnection: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry TcpSocket.t => unit,
+      @uncurry (TcpSocket.t => unit),
     ) => subtype<'ty> = "off"
     @send
     external offListening: (
@@ -425,7 +420,7 @@ module TcpServer = {
     external onConnectionOnce: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry TcpSocket.t => unit,
+      @uncurry (TcpSocket.t => unit),
     ) => subtype<'ty> = "once"
     @send
     external onListeningOnce: (
@@ -437,10 +432,9 @@ module TcpServer = {
   module Impl = {
     include Events
     @send
-    external close: (subtype<'ty>, ~callback: Js.nullable<Js.Exn.t> => unit) => subtype<'ty> =
-      "close"
+    external close: (subtype<'ty>, ~callback: Nullable.t<JsExn.t> => unit) => subtype<'ty> = "close"
     @send
-    external getConnections: (subtype<'ty>, (Js.nullable<Js.Exn.t>, int) => unit) => subtype<'ty> =
+    external getConnections: (subtype<'ty>, (Nullable.t<JsExn.t>, int) => unit) => subtype<'ty> =
       "getConnections"
     @set
     external setMaxConnections: (subtype<'ty>, int) => unit = "maxConnections"
@@ -478,7 +472,7 @@ module IcpServer = {
     external onConnection: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry IcpSocket.t => unit,
+      @uncurry (IcpSocket.t => unit),
     ) => subtype<'ty> = "on"
     @send
     external onListening: (
@@ -494,7 +488,7 @@ module IcpServer = {
     external offConnection: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry IcpSocket.t => unit,
+      @uncurry (IcpSocket.t => unit),
     ) => subtype<'ty> = "off"
     @send
     external offListening: (
@@ -512,7 +506,7 @@ module IcpServer = {
     external onConnectionOnce: (
       subtype<'ty>,
       @as("connection") _,
-      @uncurry IcpSocket.t => unit,
+      @uncurry (IcpSocket.t => unit),
     ) => subtype<'ty> = "once"
     @send
     external onListeningOnce: (
@@ -524,10 +518,9 @@ module IcpServer = {
   module Impl = {
     include Events
     @send
-    external close: (subtype<'ty>, ~callback: Js.nullable<Js.Exn.t> => unit) => subtype<'ty> =
-      "close"
+    external close: (subtype<'ty>, ~callback: Nullable.t<JsExn.t> => unit) => subtype<'ty> = "close"
     @send
-    external getConnections: (subtype<'ty>, (Js.nullable<Js.Exn.t>, int) => unit) => subtype<'ty> =
+    external getConnections: (subtype<'ty>, (Nullable.t<JsExn.t>, int) => unit) => subtype<'ty> =
       "getConnections"
     @set
     external setMaxConnections: (subtype<'ty>, int) => unit = "maxConnections"

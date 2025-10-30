@@ -69,7 +69,7 @@ module Http2Session = {
   @send
   external onConnect: (t, @as("connect") _, @uncurry (t, Net.Socket.t) => unit) => t = "on"
   @send
-  external onError: (t, @as("error") _, @uncurry Js.Exn.t => unit) => t = "on"
+  external onError: (t, @as("error") _, @uncurry (JsExn.t => unit)) => t = "on"
   @send
   external onFrameError: (
     t,
@@ -85,7 +85,7 @@ module Http2Session = {
   @send
   external onLocalSettings: (t, @as("localSettings") _, @uncurry settingsObject => unit) => t = "on"
   @send
-  external onPing: (t, @as("ping") _, @uncurry Buffer.t => unit) => t = "on"
+  external onPing: (t, @as("ping") _, @uncurry (Buffer.t => unit)) => t = "on"
   @send
   external onRemoteSettings: (t, @as("remoteSettings") _, @uncurry settingsObject => unit) => t =
     "on"
@@ -102,7 +102,7 @@ module Http2Session = {
   @send external close: t => unit = "close"
   @get external closed: t => bool = "closed"
   @send external destroy: t => unit = "destroy"
-  @send external destroyWithError: (t, Js.Exn.t) => unit = "destroy"
+  @send external destroyWithError: (t, JsExn.t) => unit = "destroy"
   @send external destroyWithCode: (t, int) => unit = "destroy"
   @get external destroyed: t => bool = "destroyed"
   @get @return(nullable)
@@ -125,13 +125,10 @@ module Http2Session = {
   external originSet: t => option<array<string>> = "originSet"
   @get external pendingSettingsAck: t => bool = "pendingSettingsAck"
   @send
-  external ping: (t, (Js.Nullable.t<Js.Exn.t>, int, Buffer.t) => unit) => bool = "ping"
+  external ping: (t, (Nullable.t<JsExn.t>, int, Buffer.t) => unit) => bool = "ping"
   @send
-  external pingWith: (
-    t,
-    ~payload: Buffer.t,
-    (Js.Nullable.t<Js.Exn.t>, int, Buffer.t) => unit,
-  ) => bool = "ping"
+  external pingWith: (t, ~payload: Buffer.t, (Nullable.t<JsExn.t>, int, Buffer.t) => unit) => bool =
+    "ping"
   @send external ref: t => unit = "ref"
   @get
   external remoteSettings: t => {
@@ -161,7 +158,7 @@ module Http2Session = {
   external settings: (
     t,
     settingsObject,
-    ~callback: (Js.Null.t<Js.Exn.t>, settingsObject, int) => unit=?,
+    ~callback: (Null.t<JsExn.t>, settingsObject, int) => unit=?,
   ) => unit = "settings"
   @get external type_: t => int = "type"
 }
@@ -217,7 +214,7 @@ module Http2ServerRequest = {
     @get external complete: subtype<'r, 'ty> => bool = "complete"
     @send external destroy: subtype<'r, 'ty> => unit = "destroy"
     @send
-    external destroyWithError: (subtype<'r, 'ty>, Js.Exn.t) => unit = "destroy"
+    external destroyWithError: (subtype<'r, 'ty>, JsExn.t) => unit = "destroy"
     @get external headers: subtype<'r, 'ty> => {..} = "headers"
     @get
     external httpVersion: subtype<'r, 'ty> => string = "httpVersion"
@@ -297,7 +294,7 @@ module Http2ServerResponse = {
     external createPushResponse: (
       subtype<'ty>,
       {..},
-      @uncurry (Js.Exn.t, ServerHttp2Stream.t) => unit,
+      @uncurry (JsExn.t, ServerHttp2Stream.t) => unit,
     ) => unit = "writeHead"
   }
   include Impl

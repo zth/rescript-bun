@@ -278,7 +278,7 @@ external readUintLE: (t, ~offset: int, ~length: int) => float = "readUintLE"
 @send external swap32: t => t = "swap32"
 @send external swap64: t => t = "swap64"
 
-@send external toJSON: t => Js.Json.t = "toJSON"
+@send external toJSON: t => JSON.t = "toJSON"
 
 @send external toString: t => string = "toString"
 @send
