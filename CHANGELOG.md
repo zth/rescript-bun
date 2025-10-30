@@ -1,5 +1,18 @@
 # main
 
+## 2.1.0
+
+### Minor Changes
+
+- 5f77ea3: New bindings.
+
+### Patch Changes
+
+- e813c54: Added Bun.CSRF bindings
+- 0408064: Add Bun.Secrets bindings.
+- 0408064: Add Bun.S3 bindings.
+- 27734eb: Move `responseRedirect` out of global scope, to stop mix up with result.Error constructor.
+
 ## 2.0.3
 
 ### Patch Changes
