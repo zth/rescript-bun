@@ -23,7 +23,7 @@ You need to be on ReScript v12 `>=12.0.0-alpha.4`.
 Install `rescript-bun`:
 
 ```bash
-npm i rescript-bun@next
+bun add rescript-bun@next
 ```
 
 Include them in your `rescript.json`:
@@ -224,7 +224,7 @@ If you do want to contribute, _please open an issue saying you're starting work 
 
 ## Versioning and releasing
 
-This project uses [Changesets](https://github.com/changesets/changesets) to manage versions and changelogs. Run `npm run changeset` to create a changeset describing your changes. When changes are merged to `main`, a GitHub Action opens a release PR and merging that will publish a new version.
+This project uses [Changesets](https://github.com/changesets/changesets) to manage versions and changelogs. Run `bun run changeset` to create a changeset describing your changes. When changes are merged to `main`, a GitHub Action opens a release PR and merging that will publish a new version.
 
 
 ## Bindings style
