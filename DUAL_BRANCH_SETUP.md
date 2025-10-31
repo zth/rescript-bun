@@ -32,13 +32,13 @@ This ensures that changesets work correctly on each branch by comparing against 
 ## Release Process
 
 ### For 1.x releases (main branch):
-1. Create changeset: `npm run changeset`
+1. Create changeset: `bun run changeset`
 2. Commit and push to main branch
 3. The `release-main.yml` workflow will create a release PR or publish
 
 ### For 2.x releases (2.x branch):
 1. Switch to 2.x branch: `git checkout 2.x`
-2. Create changeset: `npm run changeset`
+2. Create changeset: `bun run changeset`
 3. Commit and push to 2.x branch
 4. The `release-2x.yml` workflow will create a release PR or publish
 
